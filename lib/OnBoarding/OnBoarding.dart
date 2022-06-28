@@ -1,4 +1,6 @@
+import 'package:algorizainternship/Componets/Componets.dart';
 import 'package:algorizainternship/Componets/ElevatedButton.dart';
+import 'package:algorizainternship/Login/LoginScreen.dart';
 import 'package:algorizainternship/Style/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -50,7 +52,8 @@ List<OnBoardingModel> boardList=[
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: MyElevatedButton(
-              mediaQuery.height/20,mediaQuery.width/5,(){},'Skip',Color(0xfffaf2e7),14,20,Colors.black
+              mediaQuery.height/20,mediaQuery.width/5,(){navigateTo(context, widget: const LoginScreen());},
+                'Skip',Color(0xfffaf2e7),14,20,Colors.black
             )
           )
         ],
