@@ -1,5 +1,4 @@
 import 'package:algorizainternship/Componets/ElevatedButton.dart';
-import 'package:algorizainternship/Login/OnBoarding.dart';
 import 'package:algorizainternship/Style/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
