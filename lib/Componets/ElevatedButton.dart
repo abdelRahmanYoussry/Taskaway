@@ -2,17 +2,17 @@ import 'package:algorizainternship/Componets/ElevatedButton.dart';
 import 'package:flutter/material.dart';
 
 class MyElevatedButton extends StatelessWidget {
-  final double height;
+  late double height;
   final double width;
-  final double fontSize;
-  final double radius;
+  late double? fontSize=14.0;
+  final double? radius;
   void Function() onTap;
   final Color buttonColor;
-  final Color textColor;
+  late Color? textColor;
   final String buttonName;
-  MyElevatedButton(
-      this.height,this.width,
-      this.onTap,this.buttonName,this.buttonColor,this.fontSize,this.radius,this.textColor);
+  MyElevatedButton({
+      required this.height,required this.width,this.radius,this.fontSize,
+      required this.onTap,required this.buttonName,required this.buttonColor,this.textColor});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -22,7 +22,7 @@ class MyElevatedButton extends StatelessWidget {
           style:ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(buttonColor,),
           shape:MaterialStateProperty.all(RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius)
+            borderRadius: BorderRadius.circular(radius!)
           ))
           )
       // ,style:ElevatedButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:algorizainternship/Componets/ElevatedButton.dart';
 import 'package:algorizainternship/Componets/TextFormField.dart';
 import 'package:algorizainternship/Style/Colors.dart';
 import 'package:country_pickers/country.dart';
@@ -80,7 +81,7 @@ class LoginScreen extends StatelessWidget {
 }
 Widget _buildDropdownItem(Country country) => Padding(
   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-  child:   Container(
+  child:   SizedBox(
     width: 100,
     child: Row(
       children: <Widget>[

@@ -50,10 +50,11 @@ List<OnBoardingModel> boardList=[
         elevation: 0.0,
         actions: [
           Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
             child: MyElevatedButton(
-              mediaQuery.height/20,mediaQuery.width/5,(){navigateTo(context, widget: const LoginScreen());},
-                'Skip',Color(0xfffaf2e7),14,20,Colors.black
+              height:10 ,buttonName:'Skip' ,buttonColor: const Color(0xfffaf2e7),
+              onTap: (){navigateTo(context, widget: const LoginScreen());},width: 60,
+              textColor: Colors.black,radius:20 ,fontSize:14 ,
             )
           )
         ],
@@ -79,7 +80,7 @@ List<OnBoardingModel> boardList=[
                 controller:boardController ,
                 onPageChanged: (int index){
                 },
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context,index)=>buildOnBoardingItem(boardList[index])),),
             const SizedBox(
               height: 20,
@@ -95,7 +96,9 @@ List<OnBoardingModel> boardList=[
                 count: boardList.length),
             Padding(
               padding: const EdgeInsets.only(top: 30.0,bottom: 10),
-              child: MyElevatedButton(mediaQuery.height/15, double.infinity, () { }, 'Get Started',mainColor, 18,10,Colors.white),
+              child: MyElevatedButton(width:double.infinity ,height: 60,
+                  onTap: () {navigateTo(context, widget: const LoginScreen()); },
+                  buttonColor:mainColor ,buttonName: 'Get Started',textColor:Colors.white , fontSize: 18,radius:10 ,),
             ) ,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
