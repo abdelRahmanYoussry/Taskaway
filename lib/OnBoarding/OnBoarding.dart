@@ -1,6 +1,7 @@
 import 'package:algorizainternship/Componets/Componets.dart';
 import 'package:algorizainternship/Componets/ElevatedButton.dart';
 import 'package:algorizainternship/Login/LoginScreen.dart';
+import 'package:algorizainternship/Register/RegisterScreen.dart';
 import 'package:algorizainternship/Style/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -108,7 +109,9 @@ List<OnBoardingModel> boardList=[
                 const Text('Dont Have an account?',style: TextStyle(
                   color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16
                 ),),
-                TextButton(onPressed: (){}, child: Text(
+                TextButton(onPressed: (){
+                  navigateTo(context, widget: const RegisterScreen());
+                }, child: Text(
                   'Sign Up',style: TextStyle(
                   color: mainColor,fontSize: 16,fontWeight: FontWeight.bold
                 ),

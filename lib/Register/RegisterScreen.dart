@@ -1,33 +1,34 @@
 import 'package:algorizainternship/Componets/Componets.dart';
 import 'package:algorizainternship/Componets/ElevatedButton.dart';
 import 'package:algorizainternship/Componets/TextFormField.dart';
-import 'package:algorizainternship/Register/RegisterScreen.dart';
+import 'package:algorizainternship/Login/LoginScreen.dart';
 import 'package:algorizainternship/Style/Colors.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;
-   var emailController= TextEditingController();
+    var emailController= TextEditingController();
+    var passwordController= TextEditingController();
     var formKey=GlobalKey<FormState>();
     return Scaffold(
-     appBar: AppBar(
-       automaticallyImplyLeading: false,
-       toolbarHeight: mediaQuery.height/4,
-       flexibleSpace: Container(
-         decoration: const BoxDecoration(
-             image: DecorationImage(
-                 image: AssetImage('assets/image/background.jpg'),
-                 fit: BoxFit.fitWidth
-             )
-         ),
-       ),
-     ),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        toolbarHeight: mediaQuery.height/10,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/image/background.jpg'),
+                  fit: BoxFit.fitWidth
+              )
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -36,14 +37,38 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  [
-                 Text('Welcome to Fashion Daily ',
-                   style: Theme.of(context).textTheme.caption!.copyWith(fontSize:14 ),),
-                 const SizedBox(height: 20,),
-                 Text('Sign in ',
-                   style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.black),),
+                Text('Welcome to Fashion Daily ',
+                  style: Theme.of(context).textTheme.caption!.copyWith(fontSize:14 ),),
                 const SizedBox(height: 20,),
-                 Text('Phone Number ',
-                   style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),),
+                Text('Register ',
+                  style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.black),),
+                const SizedBox(height: 20,),
+                Text('Email ',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),),
+                MyTextFormField(
+                  textInputFormat:"[a-zA-Z0-9-@.]",
+                  backgroundColor: Colors.white,
+                  borderColor: const Color(0xffebedee),
+                  control:emailController ,
+                  isPassword: false,
+                  hint: 'Eg: Example@gmail.com ',
+                  validator: (value)
+                  {
+                    if(value.isEmpty)
+                      return 'Email Can not be Empty';
+                    else
+                      return null;
+                  },
+                  readOnly: false,
+                  labelColor: Colors.black,
+                  type: TextInputType.emailAddress,
+                  onTap: (){},
+                  textColor: Colors.black,
+                  onChanged: (value){},
+                ),
+                const SizedBox(height: 10,),
+                Text('Phone Number ',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),),
                 MyTextFormField(
                   textInputFormat: '[0-9]',
                   backgroundColor: Colors.white,
@@ -78,20 +103,46 @@ class LoginScreen extends StatelessWidget {
                   textColor: Colors.black,
                   onChanged: (value){},
                 ),
+                const SizedBox(height: 10,),
+                Text('Password ',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.bold),),
+                MyTextFormField(
+                  textInputFormat:"[a-zA-Z0-9]",
+                  backgroundColor: Colors.white,
+                  borderColor: const Color(0xffebedee),
+                  control:passwordController ,
+                  isPassword: true,
+                  suffix: Icons.remove_red_eye,
+                  hint: 'Password',
+
+                  validator: (value)
+                  {
+                    if(value.isEmpty)
+                      return 'Password Can not be Empty';
+                    else
+                      return null;
+                  },
+                  readOnly: false,
+                  labelColor: Colors.black,
+                  type: TextInputType.emailAddress,
+                  onTap: (){},
+                  textColor: Colors.black,
+                  onChanged: (value){},
+                ),
                 const SizedBox(
                   height: 20,
                 ),
                 MyElevatedButton(
                   borderColor:Colors.blue ,borderWidth: 0,
-                    height: 50, width: double.infinity,
-                    onTap: (){
+                  height: 50, width: double.infinity,
+                  onTap: (){
                     if(formKey.currentState!.validate()){
                       print('All is ok');
                     }
-                    }, buttonName: 'Sign in',
-                    buttonColor: Colors.blue,radius: 5,),
+                  }, buttonName: 'Register',
+                  buttonColor: Colors.blue,radius: 5,),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 Row(
                   children: [
@@ -120,7 +171,7 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 MyElevatedButton(
                   borderWidth: 2,
@@ -138,23 +189,32 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Dont Have any account?',style: TextStyle(
+                    const Text('have an account',style: TextStyle(
                         color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16
                     ),),
                     TextButton(onPressed: (){
-                      navigateTo(context, widget: const RegisterScreen());
+                      navigateTo(context, widget: const LoginScreen());
                     }, child: const Text(
-                      'Sign Up',style: TextStyle(
+                      'Sign in',style: TextStyle(
                         color: Colors.blue,fontSize: 16,fontWeight: FontWeight.bold
                     ),
                     ))
                   ],
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
-                Text('Use the application according to polivy rules ,Any kinds of violations will be subject to sanctions',
-                  style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 16,),),
+                Column(
+                  children: [
+                    Text ('By regestring your account ,you are agree to our ',
+                      style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 16,),),
+                    TextButton(onPressed: (){}, child: const Text(
+                      'tearms and conditions',style: TextStyle(
+                        color: Colors.blue,fontSize: 12,fontWeight: FontWeight.bold
+                    ),
+                    ))
+                  ],
+                ),
 
               ],
             ),
@@ -164,7 +224,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
 Widget _buildDropdownItem(Country country) => Padding(
   padding: const EdgeInsets.symmetric(horizontal: 10.0),
   child:   SizedBox(

@@ -71,13 +71,13 @@ class MyTextFormField extends StatelessWidget {
             borderSide: BorderSide(color: borderColor, width: 3),
             borderRadius: BorderRadius.circular(0)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: borderColor, width: 6),
+            borderSide: BorderSide(color: borderColor, width: 3),
             borderRadius: BorderRadius.circular(0)),
         focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 6),
+            borderSide: BorderSide(color: Colors.red, width: 4),
             borderRadius: BorderRadius.circular(5)),
         errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 6),
+            borderSide: BorderSide(color: Colors.red, width: 4),
             borderRadius: BorderRadius.circular(5)),
       ),
     );
