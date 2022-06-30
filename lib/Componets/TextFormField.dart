@@ -75,10 +75,10 @@ class MyTextFormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(0)),
         focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 6),
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(5)),
         errorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 6),
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(5)),
       ),
     );
   }

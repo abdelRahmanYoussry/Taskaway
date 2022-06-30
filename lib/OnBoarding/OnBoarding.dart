@@ -52,6 +52,7 @@ List<OnBoardingModel> boardList=[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
             child: MyElevatedButton(
+              borderColor:const Color(0xfffaf2e7) ,borderWidth: 0,
               height:10 ,buttonName:'Skip' ,buttonColor: const Color(0xfffaf2e7),
               onTap: (){navigateTo(context, widget: const LoginScreen());},width: 60,
               textColor: Colors.black,radius:20 ,fontSize:14 ,
@@ -97,6 +98,7 @@ List<OnBoardingModel> boardList=[
             Padding(
               padding: const EdgeInsets.only(top: 30.0,bottom: 10),
               child: MyElevatedButton(width:double.infinity ,height: 60,
+                  borderWidth: 0,borderColor:mainColor ,
                   onTap: () {navigateTo(context, widget: const LoginScreen()); },
                   buttonColor:mainColor ,buttonName: 'Get Started',textColor:Colors.white , fontSize: 18,radius:10 ,),
             ) ,
