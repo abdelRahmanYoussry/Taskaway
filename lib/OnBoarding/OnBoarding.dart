@@ -81,6 +81,9 @@ List<OnBoardingModel> boardList=[
                 },
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context,index)=>buildOnBoardingItem(boardList[index])),),
+            const SizedBox(
+              height: 20,
+            ),
             SmoothPageIndicator(
                 controller: boardController,
                 effect:  const ExpandingDotsEffect(
@@ -97,7 +100,7 @@ List<OnBoardingModel> boardList=[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Dont Have an account?',style: TextStyle(
+                const Text('Dont Have an account?',style: TextStyle(
                   color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16
                 ),),
                 TextButton(onPressed: (){}, child: Text(
@@ -118,8 +121,10 @@ Widget buildOnBoardingItem(OnBoardingModel model)=>Column(
   crossAxisAlignment: CrossAxisAlignment.center,
   // mainAxisAlignment: MainAxisAlignment.start,
   children: [
-    Image(
-      image: AssetImage(model.image),),
+    Expanded(
+      child: Image(
+        image: AssetImage(model.image),),
+    ),
     Text(model.title,
         style: const TextStyle(
           fontSize: 28,fontWeight: FontWeight.bold,

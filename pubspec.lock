@@ -43,13 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
-  country_picker:
+  country_pickers:
     dependency: "direct main"
     description:
-      name: country_picker
+      name: country_pickers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.15"
+    version: "2.0.0"
   cupertino_icons:
     dependency: "direct main"
     description:
