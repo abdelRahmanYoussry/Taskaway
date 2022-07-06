@@ -2,6 +2,8 @@ import 'package:algorizainternship/OnBoarding/OnBoarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'Counter (bloc)/Ui/Counter.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: const OnBoardingScreen(),
+      home: const CounterScreen(),
     );
   }
 }

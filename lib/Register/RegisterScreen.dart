@@ -205,9 +205,10 @@ class RegisterScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text ('By regestring your account ,you are agree to our ',
-                      style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 16,),),
+                      style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 14,),),
                     TextButton(onPressed: (){}, child: const Text(
                       'tearms and conditions',style: TextStyle(
                         color: Colors.blue,fontSize: 12,fontWeight: FontWeight.bold

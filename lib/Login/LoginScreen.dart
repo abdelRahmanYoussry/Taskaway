@@ -18,12 +18,12 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
      appBar: AppBar(
        automaticallyImplyLeading: false,
-       toolbarHeight: mediaQuery.height/4,
+       toolbarHeight: mediaQuery.height/6,
        flexibleSpace: Container(
          decoration: const BoxDecoration(
              image: DecorationImage(
                  image: AssetImage('assets/image/background.jpg'),
-                 fit: BoxFit.fitWidth
+                 fit: BoxFit.cover
              )
          ),
        ),
@@ -136,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text('Dont Have any account?',style: TextStyle(
                         color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16
@@ -153,8 +153,8 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Text('Use the application according to polivy rules ,Any kinds of violations will be subject to sanctions',
-                  style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 16,),),
+                Text('Use the application according to policy rules,\nAny kinds of violations will be subject to sanctions',
+                  style: Theme.of(context).textTheme.caption!.copyWith(fontSize: 14,),),
 
               ],
             ),
