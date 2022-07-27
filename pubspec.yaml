@@ -38,6 +38,11 @@ dependencies:
   country_pickers: ^2.0.0
   bloc: ^7.1.0
   flutter_bloc: ^7.0.1
+  sqflite: ^2.0.3
+  path: ^1.8.1
+  date_picker_timeline: ^1.2.3
+  intl: ^0.17.0
+  conditional_builder_null_safety: ^0.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

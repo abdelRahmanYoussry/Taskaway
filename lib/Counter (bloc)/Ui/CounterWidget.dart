@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../Style/Colors.dart';
+import '../Style/Colors.dart';
 
 class CounterWidget extends StatelessWidget {
   const CounterWidget({Key? key}) : super(key: key);
@@ -22,8 +22,14 @@ class CounterWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row
-                (
+             const Text('Counter with Bloc',
+             style: TextStyle(
+               fontSize: 28,fontWeight: FontWeight.bold
+             ),),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
 
 

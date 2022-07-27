@@ -1,4 +1,3 @@
-import 'package:algorizainternship/Componets/ElevatedButton.dart';
 import 'package:flutter/material.dart';
 
 class MyElevatedButton extends StatelessWidget {
@@ -35,11 +34,6 @@ class MyElevatedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius??0)
           ))
           )
-      // ,style:ElevatedButton.styleFrom(
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(20)
-      //     )
-      //   )
           ,child:  Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

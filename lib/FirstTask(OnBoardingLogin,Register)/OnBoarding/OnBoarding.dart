@@ -1,10 +1,12 @@
-import 'package:algorizainternship/Componets/Componets.dart';
-import 'package:algorizainternship/Componets/ElevatedButton.dart';
-import 'package:algorizainternship/Login/LoginScreen.dart';
-import 'package:algorizainternship/Register/RegisterScreen.dart';
-import 'package:algorizainternship/Style/Colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../Counter (bloc)/Style/Colors.dart';
+import '../../SecondTask(ToDoApp)/Widget/ElevatedButton.dart';
+import '../Componets/Componets.dart';
+import '../Login/LoginScreen.dart';
+import '../Register/RegisterScreen.dart';
 class OnBoardingModel{
   final String image;
   final String title;

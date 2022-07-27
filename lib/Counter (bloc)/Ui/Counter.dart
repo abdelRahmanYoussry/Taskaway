@@ -1,7 +1,7 @@
 
-import 'package:algorizainternship/Style/Colors.dart';
 import 'package:flutter/material.dart';
 
+import '../Style/Colors.dart';
 import 'CounterWidget.dart';
 
 class CounterScreen extends StatelessWidget {
