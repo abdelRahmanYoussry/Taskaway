@@ -14,6 +14,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+  static final navigatorKey = GlobalKey<NavigatorState>();
 
   // This widget is the root of your application.
   @override
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home:  BoardScreen(),
+        navigatorKey: navigatorKey,
       ),
     );
   }

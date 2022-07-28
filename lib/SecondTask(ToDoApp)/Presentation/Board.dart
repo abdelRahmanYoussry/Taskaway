@@ -7,11 +7,17 @@ import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/UncompleteTa
 import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/Divider.dart';
 import 'package:flutter/material.dart';
 
+import '../Shared/AppCubit/Notifications.dart';
 import 'Schedule.dart';
 
-
-class BoardScreen extends StatelessWidget {
+class BoardScreen extends StatefulWidget {
    const BoardScreen({Key? key}) : super(key: key);
+  @override
+  State<BoardScreen> createState() => _BoardScreenState();
+}
+
+class _BoardScreenState extends State<BoardScreen> {
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;

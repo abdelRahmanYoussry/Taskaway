@@ -5,10 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../FirstTask(OnBoardingLogin,Register)/Componets/ElevatedButton.dart';
+import '../Shared/AppCubit/Notifications.dart';
 import 'Board.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
    AddTaskScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  var notifications= Notications();
+  bool x=false;
+  Color textColor = Colors.white;
+  void initState() {
+    notifications.intializationNotification();
+   super.initState();
+  }
    var titleController= TextEditingController();
    var deadLineController= TextEditingController();
    var startTimeController= TextEditingController();
@@ -224,9 +239,8 @@ class AddTaskScreen extends StatelessWidget {
             ),
             height:mediaQuery.height/12 ,
             child: myDropDownMenu(
-              labelColor:Colors.white ,
                 hint: const Text('1 hour before',style: TextStyle(
-                  color: Colors.grey,fontSize: 12,
+                  color: Colors.black,fontSize: 12,
                 ),),
                 borderColor:Colors.grey[200]! ,
                 height:mediaQuery.height/14 ,
@@ -265,7 +279,7 @@ class AddTaskScreen extends StatelessWidget {
                   child: myDropDownMenu(
                       labelColor:Colors.white ,
                       hint: const Text('Daily',style: TextStyle(
-                        color: Colors.grey,fontSize: 12,
+                        color: Colors.black,fontSize: 12,
                       ),),
                       borderColor:Colors.grey[200]! ,
                       height:mediaQuery.height/14 ,
@@ -284,7 +298,10 @@ class AddTaskScreen extends StatelessWidget {
                         );
                       }).toList(),
                       validator: (value){},
-                      onChange: (value){}),
+                      onChange: (value){
+                       x=true;
+                       textColor=Colors.black;
+                      }),
                 ),
                  SizedBox(
                   height: mediaQuery.height/14.toDouble(),
@@ -297,14 +314,15 @@ class AddTaskScreen extends StatelessWidget {
                     borderColor: Colors.green,
                     height: mediaQuery.height/16,
                     width: double.infinity,
-                    onTap: (){
+                    onTap: ()async{
                       if(formKey.currentState!.validate()){
                        AppCubit.get(context).insertToDataBase(
                            title: titleController.text,
                            date: deadLineController.text,
-                           // taskColor: Colors.blue,
                            time: endTimeController.text);
                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BoardScreen()), (route) => false);
+                       await notifications.displayNotification( );
+
                       }
                     },
                     buttonName: 'Create task',
@@ -316,6 +334,7 @@ class AddTaskScreen extends StatelessWidget {
       ),
     );
   }
+
    Widget myDropDownMenu<listName>({
     required Text hint,
      className,
@@ -332,6 +351,11 @@ class AddTaskScreen extends StatelessWidget {
      return SizedBox(
        height:height,width: double.infinity,
        child: DropdownButtonFormField(
+         elevation: 6,
+           borderRadius:BorderRadius.circular(30) ,
+           onTap:(){
+           // textColor=Colors.white;
+           } ,
            validator: validator,
            hint: hint,
            decoration: InputDecoration(
@@ -360,13 +384,13 @@ class AddTaskScreen extends StatelessWidget {
                  )
              ),
            ),
-           dropdownColor: Colors.black.withOpacity(0.1),
-           style: const TextStyle(
+           dropdownColor: Colors.white.withOpacity(0.1),
+           style:  TextStyle(
+             color: textColor,
              fontSize: 16,
-             color: Colors.white,
            ),
            iconEnabledColor: Colors.grey[400],
-           isExpanded: true,
+           isExpanded: false,
            icon: const Icon(Icons.arrow_drop_down),
            iconSize: 20,
            menuMaxHeight: 200,
@@ -378,5 +402,4 @@ class AddTaskScreen extends StatelessWidget {
            items: myDropDownItems),
      );
    }
-
 }

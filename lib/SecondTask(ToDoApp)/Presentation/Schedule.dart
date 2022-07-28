@@ -19,6 +19,7 @@ class ScheduleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;
     var cubit=AppCubit.get(context);
+    cubit.getDateToScheduleTable(AppCubit.get(context).database, date:scheduleTime );
     bool isChecked = false;
   debugPrint(scheduleTime.toString());
   debugPrint(weekScheduleTime.toString());
