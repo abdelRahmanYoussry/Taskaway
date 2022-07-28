@@ -64,10 +64,7 @@ class ScheduleScreen extends StatelessWidget {
              onDateChange: (date){
                 debugPrint('${DateFormat('EEEE').format(date)} Date') ;
                 weekScheduleTime=DateFormat('EEEE').format(date);
-                // debugPrint(DateFormat.yMMMd().format(date)+' Date Formated') ;
-               // date=DateFormat.yMMMd().format(date);
                cubit.getDateToScheduleTable(AppCubit.get(context).database,date:DateFormat.yMMMd().format(date).toString());
-                // debugPrint(AppCubit.get(context).scheduleTasks.toString()) ;
 
              },
            ),
@@ -95,50 +92,6 @@ class ScheduleScreen extends StatelessWidget {
           addTask: false,
           isChecked: isChecked),
            )
-            // Expanded(
-            //   child: ConditionalBuilder(
-            //     builder: (context)=>ListView.separated(
-            //         shrinkWrap: true,
-            //         itemBuilder:(context,index)=>  Padding(
-            //           padding: const EdgeInsets.symmetric(vertical: 10.0),
-            //           child: TasksWidget(
-            //               model:cubit.scheduleTasks[index] ,
-            //               height: mediaQuery.height/8,
-            //               isChecked: isChecked,
-            //               popUpMenuColor: Colors.white,
-            //               checkBorderColor: Colors.white,
-            //               taskName: cubit.scheduleTasks[index]['title'],
-            //               taskColor: Colors.red,
-            //               onChanged: (value){},
-            //               taskTitleColor: Colors.black,
-            //               checkBoxFillColor: Colors.white
-            //               , checkColor: Colors.red),
-            //         ),
-            //         separatorBuilder: (context,index)=>const MyDivider(),
-            //         itemCount: cubit.scheduleTasks.length),
-            //     fallback: (context)=>Center(
-            //       child: Padding(
-            //         padding: const EdgeInsets.all(20.0),
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children:const  [
-            //             Icon(Icons.menu,
-            //               size: 100,
-            //               color: Colors.grey,
-            //             ),
-            //             Text(
-            //               'No Tasks Yet Please add Some Tasks',
-            //               style:TextStyle(
-            //                   fontSize:16,
-            //                   fontWeight: FontWeight.bold) ,),
-            //           ],
-            //         ),
-            //       ),
-            //     ) ,
-            //     condition:cubit.scheduleTasks.isNotEmpty ,
-            //   ),
-            // )
-
           ],
         ),
       ),

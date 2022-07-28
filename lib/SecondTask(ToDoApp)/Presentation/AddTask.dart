@@ -214,27 +214,6 @@ class AddTaskScreen extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
                 ),
-                // MyTextFormField(
-                //   labelColor: Colors.white,
-                //   onChanged: (value){},
-                //   suffixClicked: (){},
-                //   onTap: (){},
-                //   readOnly: true,
-                //   validator: (value) {
-                //     if (value.isEmpty) {
-                //       return "Reminder Can't be Empty";
-                //     }
-                //     return null;
-                //   },
-                //   borderColor: Colors.grey[200]!,
-                //   backgroundColor: Colors.grey[200]!,
-                //   type: TextInputType.text,
-                //   hint: '10 minutes early',
-                //   suffixIconColor: Colors.grey[400],
-                //   suffix: Icons.arrow_drop_down_sharp,
-                //   control: reminderController,
-                //   textColor: Colors.black,
-                //   isPassword: false,),
                 const SizedBox(
                   height: 10,
                 ),
@@ -307,29 +286,6 @@ class AddTaskScreen extends StatelessWidget {
                       validator: (value){},
                       onChange: (value){}),
                 ),
-                // MyTextFormField(
-                //   labelColor: Colors.white,
-                //   onChanged: (value){},
-                //   onTap: (){},
-                //   readOnly: true,
-                //   // validator: (value) {
-                //   //   if (value.isEmpty) {
-                //   //     return "Repeat Can't be Empty";
-                //   //   }
-                //   //   return null;
-                //   // },
-                //   borderColor: Colors.grey[200]!,
-                //   backgroundColor: Colors.grey[200]!,
-                //   type: TextInputType.text,
-                //   hint: 'Weakly',
-                //   suffixIconColor: Colors.grey[400],
-                //   suffix: Icons.arrow_drop_down_sharp,
-                //   control: repeatController,
-                //   textColor: Colors.black,
-                //   isPassword: false,),
-                // Spacer(
-                //   flex: 3,
-                // ),
                  SizedBox(
                   height: mediaQuery.height/14.toDouble(),
                 ),

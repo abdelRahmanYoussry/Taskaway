@@ -17,60 +17,6 @@ class AppCubit extends Cubit<AppState> {
   List<Map> favouriteTasks = [];
   List<Map> scheduleTasks = [];
 
-  // void initialDataBase()async{
-  //   var databasesPath = await getDatabasesPath();
-  //   String path = join(databasesPath, 'users.db');
-  //   debugPrint('InitialCreateDataBase');
-  //   openDataBase( path: path);
-  //   emit(InitialCreateDataBase());
-  //
-  // }
-  //
-  // void openDataBase({required String path})async{
-  //  await openDatabase(path, version: 1,
-  //       onCreate: (Database db, int version) async {
-  //         debugPrint('TableCreated');
-  //         // emit(CreateDataBase());
-  //         // When creating the db, create the table
-  //         await db.execute(
-  //             'CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)');
-  //       },onOpen:(Database dp){
-  //         database=dp;
-  //         debugPrint('DataOpened');
-  //         getUsersFromDataBase();
-  //         emit(OpenDataBase());
-  //
-  //       } );
-  //
-  // }
-  // TextEditingController userController=TextEditingController();
-  // void insertToDataBase(){
-  //    database.transaction((txn) async {
-  //      await txn.rawInsert(
-  //          'INSERT INTO USERS(name) VALUES("${userController.text}")').then((value) {
-  //        getUsersFromDataBase();
-  //        emit(InsertToDataBase());
-  //        userController.clear();
-  //        debugPrint('InsertToDataBase');
-  //      });
-  //
-  //
-  //   });
-  //
-  // }
-  //
-  //  List <Map>userList=[];
-  // void getUsersFromDataBase()async{
-  //   emit(DataBaseLoading());
-  //    database.rawQuery('SELECT * FROM users').then((value) {
-  //     userList=value;
-  //     debugPrint(userList.toString());
-  //     emit(GetUsersFromDataBase());
-  //     debugPrint('getUsersFromDataBase');
-  //   });
-  // }
-  //
-  //
   void changeCheckBox(bool checked){
 
     isChecked= checked;
@@ -181,14 +127,6 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-  // void changeBottomSheet({
-  //   required bool isShow,
-  //   required IconData icon,})
-  // {
-  //   isBottomSheetShown=isShow;
-  //   flotIcon=icon;
-  //   emit(ChangeCheckBox());
-  // }
   void deleteData({required int id})
   {
     database.rawDelete(

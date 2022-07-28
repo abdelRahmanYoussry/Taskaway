@@ -55,12 +55,6 @@ class MyTaskFullWidget extends StatelessWidget {
                         taskName: list[index]['title'],
                         taskColor: taskColor,
                         onChanged: (value){
-                          // if(AppCubit.get(context).allTasks[index]['status']=='complete'){
-                          //
-                          // }
-                          // if(value==tr)
-                          // isChecked=!isChecked;
-                          // value=!value;
                           isChecked=true;
                           if(value==true) {
                             AppCubit.get(context).updateData(status: 'complete', id: list[index]['id'] );
@@ -68,7 +62,6 @@ class MyTaskFullWidget extends StatelessWidget {
                             AppCubit.get(context).updateData(status: 'unComplete', id: list[index]['id'] );
 
                           }
-                          // AppCubit.get(context).changeCheckBox(value);
                         },
                         checkBoxFillColor: Colors.white
                         , checkColor: Colors.black),
