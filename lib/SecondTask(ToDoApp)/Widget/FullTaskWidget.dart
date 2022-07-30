@@ -49,7 +49,7 @@ class MyTaskFullWidget extends StatelessWidget {
                         model:list[index] ,
                         height: height,
                         isChecked: list[index]['status']=='complete'?true:false,
-                        popUpMenuColor: Colors.white,
+                        popUpMenuColor: Theme.of(context).backgroundColor,
                         taskTitleColor: Colors.white,
                         checkBorderColor: Colors.white,
                         taskName: list[index]['title'],
@@ -71,16 +71,16 @@ class MyTaskFullWidget extends StatelessWidget {
             fallback:(context)=>Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children:  const [
-                  Spacer(),
+                children:   [
                   Icon(Icons.menu,
                     size: 100,
-                    color: Colors.grey,
+                    color: Theme.of(context).textTheme.subtitle1!.color,
                   ),
-                  Text(
+                   Text(
                     'No Tasks Yet Please add Some Tasks',
                     style:TextStyle(
                         fontSize:16,
+                        color:Theme.of(context).textTheme.subtitle1!.color ,
                         fontWeight: FontWeight.bold) ,),
                 ],
               ),

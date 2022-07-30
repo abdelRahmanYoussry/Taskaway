@@ -31,7 +31,7 @@ class MyTextFormField extends StatelessWidget {
     this.hint, required this.type,this.validator,this.onSubmit,this.onChanged,this.onTap
     ,required this.isPassword, this.label,  this.prefix,this.suffix,this.suffixClicked,required this.borderColor,
     required this.labelColor,required this.textColor,required this.backgroundColor,
-     this.prefixIconColor,this.textInputFormat,this.suffixIconColor,
+     this.prefixIconColor,this.textInputFormat,this.suffixIconColor,this.hintStyle
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class MyTextFormField extends StatelessWidget {
       onChanged: (value) {
         onChanged!(value);
       },
-      style: TextStyle(color: textColor, fontSize: 18),
+      style: TextStyle(color: textColor, fontSize: 16),
       decoration: InputDecoration(
         errorStyle: const TextStyle(fontSize: 12, color: Colors.red),
         fillColor: backgroundColor.withOpacity(0.5),
@@ -73,10 +73,10 @@ class MyTextFormField extends StatelessWidget {
               )
             : null,
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: borderColor, width: 3),
+            borderSide: BorderSide(color: Theme.of(context).backgroundColor, width: 3),
             borderRadius: BorderRadius.circular(10)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: borderColor, width: 3),
+            borderSide: BorderSide(color:Theme.of(context).textTheme.subtitle1!.color!, width: 3),
             borderRadius: BorderRadius.circular(10)),
         focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 4),

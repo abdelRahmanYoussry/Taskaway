@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../Local/cash_helper.dart';
+
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
@@ -136,4 +138,25 @@ class AppCubit extends Cubit<AppState> {
       emit(DeleteFromDataBase());
     });
   }
+
+  bool isDark= false;
+  void changeDarkMode({bool? fromShared})
+  {
+    if(fromShared!=null){
+
+      isDark=fromShared;
+
+      emit(ChangeAppMode());
+    }
+    else
+    {
+      isDark=!isDark;
+      CashHelper.putBool(key: 'isDark', value: isDark).
+      then((value) {
+        debugPrint(isDark.toString());
+        emit(ChangeAppMode());
+      });}
+
+  }
+
 }

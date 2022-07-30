@@ -29,6 +29,7 @@ class TasksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mediaQuery=MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),height: height,
@@ -52,67 +53,94 @@ class TasksWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5,),
-          Row(
-            children: [
-              Transform.scale(
-                scale: 2,
-                child: Checkbox(
-                    fillColor: MaterialStateProperty.resolveWith((
-                        states) => checkBoxFillColor),
-                    checkColor: checkColor,
-                    splashRadius: 1,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5))
-                    ),
-                    side:  BorderSide(
-                        style: BorderStyle.solid,color:checkBorderColor
-                    ),
-                    value: isChecked,
-                    onChanged: (value) {
-                      onChanged(value);
-                    }),
-              ),
-               const SizedBox(width: 5,),
-               Text(
-                model['title'],style:  TextStyle(
-                color: taskTitleColor,fontSize: 18,fontWeight: FontWeight.w400,),
-              ),
-              const Spacer(),
-              PopupMenuButton(itemBuilder: (context)=>
-              [
-                const PopupMenuItem(value:MenuItem.item1, child: Text('Favourite',style:
-                  TextStyle(color:Colors.purple),) ),
-                const PopupMenuItem(value:MenuItem.item2, child: Text('Delete',style:
-                  TextStyle(color:Colors.red ),) ),
-                const PopupMenuItem(value:MenuItem.item3, child: Text('Complete',style:
-                  TextStyle(color:Colors.green ),) ),
-                const PopupMenuItem(value:MenuItem.item4, child: Text('Uncomplete',
-                  style:TextStyle(color: Colors.brown) ,) ),
-              ],onSelected: (value){
-                if(value==MenuItem.item1){
-                  debugPrint(MenuItem.item1.toString());
-                  taskColor=Colors.yellowAccent;
-                  taskTitleColor=Colors.black;
+          Expanded(
+            child: Row(
+              children: [
+                Transform.scale(
+                  scale: 2,
+                  child: Checkbox(
+                      fillColor: MaterialStateProperty.resolveWith((
+                          states) => checkBoxFillColor),
+                      checkColor: checkColor,
+                      splashRadius: 1,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5))
+                      ),
+                      side:  BorderSide(
+                          style: BorderStyle.solid,color:checkBorderColor
+                      ),
+                      value: isChecked,
+                      onChanged: (value) {
+                        onChanged(value);
+                      }),
+                ),
+                 const SizedBox(width: 5,),
+                 Text(
+                  model['title'],style:  TextStyle(
+                  color: taskTitleColor,fontSize: 18,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),
+                ),
+                const Spacer(),
+                PopupMenuButton(itemBuilder: (context)=>
+                [
+                   PopupMenuItem(value:MenuItem.item1, child: Container(
+                     width: double.infinity,height:mediaQuery.height/20 ,
+                     decoration: BoxDecoration(
+                       color: Colors.amber,borderRadius: BorderRadius.circular(10)
+                   ), child: const Center(
+                       child: Text('Favourite',style:
+                        TextStyle(color:Colors.white),),
+                     ),
+                  ) ),
+                   PopupMenuItem(value:MenuItem.item2, child: Container(
+                     width: double.infinity,height:mediaQuery.height/20 ,
+                     decoration: BoxDecoration(
+                       color: Colors.green,borderRadius: BorderRadius.circular(10)
+                   ), child: const Center(
+                       child: Text('Complete',style:
+                        TextStyle(color:Colors.white),),
+                     ),
+                  ) ),
+                   PopupMenuItem(value:MenuItem.item3, child: Container(
+                     width: double.infinity,height:mediaQuery.height/20 ,
+                     decoration: BoxDecoration(
+                       color: Colors.red,borderRadius: BorderRadius.circular(10)
+                   ), child: const Center(
+                       child: Text('Uncomplete',style:
+                        TextStyle(color:Colors.white),),
+                     ),
+                  ) ),
+                  PopupMenuItem(value:MenuItem.item4, child: Container(
+                    width: double.infinity,height:mediaQuery.height/20 ,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).textTheme.subtitle1!.color!,borderRadius: BorderRadius.circular(10)
+                    ), child:  Center(
+                    child: Text('Delete',style:
+                    TextStyle(color:Theme.of(context).backgroundColor),),
+                  ),
+                  ) ),
+                ],onSelected: (value){
+                  if(value==MenuItem.item1){
+                    debugPrint(MenuItem.item1.toString());
+                    AppCubit.get(context).updateData(status: 'favourite', id: model['id']);
+                  }
+                  else if(value==MenuItem.item4){
+                    AppCubit.get(context).deleteData(id: model['id']);
 
-                  AppCubit.get(context).updateData(status: 'favourite', id: model['id']);
-                }
-                else if(value==MenuItem.item2){
-                  AppCubit.get(context).deleteData(id: model['id']);
-
-                }
-                else if(value==MenuItem.item3){
-                  taskColor=Colors.green;
-                  taskTitleColor=Colors.white;
-                  AppCubit.get(context).updateData(status: 'complete', id: model['id']);
-                }
-                else if(value==MenuItem.item4){
-                  taskColor=Colors.brown;
-                  taskTitleColor=Colors.white;
-                  AppCubit.get(context).updateData(status: 'unComplete', id: model['id']);
-                }
-              },color:popUpMenuColor ,child:Icon(color: Colors.white,Icons.menu ),
-              ),
-            ],
+                  }
+                  else if(value==MenuItem.item2){
+                    // taskColor=Colors.green;
+                    // taskTitleColor=Colors.white;
+                    AppCubit.get(context).updateData(status: 'complete', id: model['id']);
+                  }
+                  else if(value==MenuItem.item3){
+                    taskColor=Colors.brown;
+                    taskTitleColor=Colors.white;
+                    AppCubit.get(context).updateData(status: 'unComplete', id: model['id']);
+                  }
+                },color:popUpMenuColor ,child: Icon(color: Colors.white,Icons.menu ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

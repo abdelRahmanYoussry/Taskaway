@@ -20,6 +20,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   var notifications= Notications();
   bool x=false;
   Color textColor = Colors.white;
+  Color textColor2 = Colors.white;
   void initState() {
     notifications.intializationNotification();
    super.initState();
@@ -38,19 +39,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         toolbarHeight: mediaQuery.height/10,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
-          color: Colors.black,
           onPressed: () {Navigator.pop(context);  },
         ),
-        titleTextStyle: const TextStyle(
-            color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold
-        ),
-        elevation: 1,
+        // titleTextStyle: const TextStyle(
+        //     color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold
+        // ),
+        elevation: 0.5,
         title: const Text('Add task'),
 
       ),
@@ -62,15 +62,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             child: Column(
               crossAxisAlignment:CrossAxisAlignment.start ,
               children:  [
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: Text('Title',
                     style: TextStyle(
-                    color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
+                    color: Theme.of(context).textTheme.subtitle1!.color,fontSize: 18,fontWeight: FontWeight.bold ,),),
                 ),
                 MyTextFormField(
                   textInputFormat:"[a-z A-Z0-9 ]",
                   labelColor: Colors.white,
+                  hintStyle: TextStyle(
+                    fontSize: 10,
+                    color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
+                  ),
                   onChanged: (value){},
                   onTap: (){},
                   validator: (value) {
@@ -80,25 +84,32 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     return null;
                   },
                   readOnly: false,
+                  onSubmit: (value){
+                    value=titleController.text;
+                  },
                   borderColor: Colors.grey[200]!,
                   backgroundColor: Colors.grey[200]!,
                   type: TextInputType.text,
                   hint: 'Task Title',
                   control: titleController,
-                  textColor: Colors.black,
+                  textColor: Theme.of(context).textTheme.subtitle1!.color!,
                   isPassword: false,),
                 const SizedBox(
                   height: 10,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text('DeadLine',
                     style: TextStyle(
-                      color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
+                      color: Theme.of(context).textTheme.subtitle1!.color,fontSize: 18,fontWeight: FontWeight.bold ,),),
                 ),
                 MyTextFormField(
                   labelColor: Colors.white,
                   onChanged: (value){},
+                  hintStyle: TextStyle(
+                      fontSize: 10,
+                      color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
+                  ),
                   onTap: (){
                     showDatePicker(
                       context: context,
@@ -124,7 +135,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   suffix: Icons.arrow_drop_down_sharp,
                   suffixIconColor: Colors.grey[400],
                   control: deadLineController,
-                  textColor: Colors.black,
+                  textColor: Theme.of(context).textTheme.subtitle1!.color!,
                   isPassword: false,),
                 const SizedBox(
                   height: 10,
@@ -134,17 +145,21 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
+                         Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text('Start Time',
                             style: TextStyle(
-                              color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
+                              color: Theme.of(context).textTheme.subtitle1!.color,fontSize: 18,fontWeight: FontWeight.bold ,),),
                         ),
                         SizedBox(
                           width: mediaQuery.width/2.5,
                           child: MyTextFormField(
                             labelColor: Colors.white,
                             onChanged: (value){},
+                            hintStyle: TextStyle(
+                                fontSize: 10,
+                                color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
+                            ),
                             onTap: (){
                               showTimePicker(
                                   context: context,
@@ -167,9 +182,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             type: TextInputType.text,
                             hint: '11:00 Am',
                             suffix: Icons.timer,
-                            suffixIconColor: Colors.grey[400],
+                            suffixIconColor: Theme.of(context).textTheme.subtitle1!.color!,
                             control: startTimeController,
-                            textColor: Colors.black,
+                            textColor: Theme.of(context).textTheme.subtitle1!.color!,
                             isPassword: false,),
                         ),
                       ],
@@ -178,17 +193,21 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
+                         Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text('End Time',
                             style: TextStyle(
-                              color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
+                              color: Theme.of(context).textTheme.subtitle1!.color,fontSize: 18,fontWeight: FontWeight.bold ,),),
                         ),
                         SizedBox(
                           width: mediaQuery.width/2.5,
                           child: MyTextFormField(
                             labelColor: Colors.white,
                             onChanged: (value){},
+                            hintStyle: TextStyle(
+                                fontSize: 10,
+                                color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
+                            ),
                             onTap: (){
                               showTimePicker(
                                   context: context,
@@ -212,8 +231,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             hint: '05:00 pm',
                             control: endTimeController,
                             suffix: Icons.timer,
-                            suffixIconColor: Colors.grey[400],
-                            textColor: Colors.black,
+                            suffixIconColor: Theme.of(context).textTheme.subtitle1!.color,
+                            textColor: Theme.of(context).textTheme.subtitle1!.color!,
                             isPassword: false,),
                         ),
                       ],
@@ -223,11 +242,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text('Reminder',
                     style: TextStyle(
-                      color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
+                      color: Theme.of(context).textTheme.subtitle1!.color!,fontSize: 18,fontWeight: FontWeight.bold ,),),
                 ),
                 const SizedBox(
                   height: 10,
@@ -237,13 +256,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               color: Colors.grey[200]!,
               borderRadius: BorderRadius.circular(10),
             ),
-            height:mediaQuery.height/12 ,
+            height:mediaQuery.height/10 ,
             child: myDropDownMenu(
-                hint: const Text('1 hour before',style: TextStyle(
-                  color: Colors.black,fontSize: 12,
+                hint:  Text('1 hour before',style: TextStyle(
+                  color: Theme.of(context).textTheme.subtitle1!.color!,fontSize: 12,
                 ),),
-                borderColor:Colors.grey[200]! ,
-                height:mediaQuery.height/14 ,
+                borderColor:Colors.grey[300]! ,
+                height:mediaQuery.height/10 ,
+                textColor: textColor,
                 myDropDownItems: reminderList.map((e) {
                   return DropdownMenuItem(
                       value: e,
@@ -259,50 +279,56 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   );
                 }).toList(),
                 validator: (value){},
-                onChange: (value){}),
+                onChange: (value){
+                 // setState((){
+                 //   textColor=Colors.black;
+                 // });
+                }),
           ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text('Repeat',
-                    style: TextStyle(
-                      color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200]!,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  height:mediaQuery.height/12 ,
-                  child: myDropDownMenu(
-                      labelColor:Colors.white ,
-                      hint: const Text('Daily',style: TextStyle(
-                        color: Colors.black,fontSize: 12,
-                      ),),
-                      borderColor:Colors.grey[200]! ,
-                      height:mediaQuery.height/14 ,
-                      myDropDownItems: repeatList.map((e) {
-                        return DropdownMenuItem(
-                            value: e,
-                            child: Row(
-                              children: [
-                                Text(e,
-                                ),
-                                const SizedBox(
-                                  width:60,
-                                ),
-                              ],
-                            )
-                        );
-                      }).toList(),
-                      validator: (value){},
-                      onChange: (value){
-                       x=true;
-                       textColor=Colors.black;
-                      }),
-                ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // const Padding(
+                //   padding: EdgeInsets.symmetric(vertical: 10.0),
+                //   child: Text('Repeat',
+                //     style: TextStyle(
+                //       color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
+                // ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: Colors.grey[200]!,
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                //   height:mediaQuery.height/12 ,
+                //   child: myDropDownMenu(
+                //       labelColor:Colors.white ,
+                //       textColor: textColor2,
+                //       hint: const Text('Daily',style: TextStyle(
+                //         color: Colors.black,fontSize: 12,
+                //       ),),
+                //       borderColor:Colors.grey[200]! ,
+                //       height:mediaQuery.height/14 ,
+                //       myDropDownItems: repeatList.map((e) {
+                //         return DropdownMenuItem(
+                //             value: e,
+                //             child: Row(
+                //               children: [
+                //                 Text(e,
+                //                 ),
+                //                 const SizedBox(
+                //                   width:60,
+                //                 ),
+                //               ],
+                //             )
+                //         );
+                //       }).toList(),
+                //       validator: (value){},
+                //       onChange: (value){
+                //         setState((){
+                //           textColor2=Colors.black;
+                //         });
+                //       }),
+                // ),
                  SizedBox(
                   height: mediaQuery.height/14.toDouble(),
                 ),
@@ -346,24 +372,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
      required Function? onChange,
      Color borderColor = Colors.limeAccent,
      Color labelColor = Colors.white,
+    required Color textColor ,
 
    }) {
-     return SizedBox(
-       height:height,width: double.infinity,
+     return Container(
+       color: Theme.of(context).backgroundColor,
        child: DropdownButtonFormField(
-         elevation: 6,
+            elevation: 6,
            borderRadius:BorderRadius.circular(30) ,
-           onTap:(){
-           // textColor=Colors.white;
-           } ,
+           onTap:(){} ,
            validator: validator,
            hint: hint,
            decoration: InputDecoration(
+             hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1!.color!),
              errorStyle:  const TextStyle(
                  fontSize: 12,
                  color: Colors.red),
-             labelStyle: TextStyle(color: labelColor,
-                 fontSize: 14
+             labelStyle: TextStyle(color: labelColor, fontSize: 12
              ),
              errorBorder:OutlineInputBorder(
                  borderRadius: BorderRadius.circular(10),
@@ -373,30 +398,34 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
              ),
              focusedBorder: OutlineInputBorder(
                borderRadius: BorderRadius.circular(10),
-               borderSide: BorderSide(
-                   width: 2,color: borderColor
+               borderSide: BorderSide(width: 3,color: Theme.of(context).textTheme.subtitle1!.color!
                ),
              ),
              enabledBorder: OutlineInputBorder(
                  borderRadius: BorderRadius.circular(10),
                  borderSide: BorderSide(
-                     width: 2,color: borderColor
+                     width: 3,color: borderColor
                  )
              ),
            ),
-           dropdownColor: Colors.white.withOpacity(0.1),
+           dropdownColor: Theme.of(context).backgroundColor,
            style:  TextStyle(
-             color: textColor,
-             fontSize: 16,
+             color: Theme.of(context).textTheme.subtitle1!.color!, fontSize: 14
            ),
            iconEnabledColor: Colors.grey[400],
            isExpanded: false,
            icon: const Icon(Icons.arrow_drop_down),
            iconSize: 20,
-           menuMaxHeight: 200,
+           menuMaxHeight:MediaQuery.of(context).size.height/5 ,
            focusColor: Colors.limeAccent,
            value: myDropDownValue,
            onChanged: (value) {
+             // print(x.toString()+' on change');
+             setState((){
+               // print(x.toString()+' on Change + onchange');
+               // textColor=Colors.black;
+             }
+             );
              onChange!(value);
            },
            items: myDropDownItems),

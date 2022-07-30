@@ -29,72 +29,73 @@ class ScheduleScreen extends StatelessWidget {
   },
   builder: (context, state) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         toolbarHeight: mediaQuery.height/10,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
-          color: Colors.black,
           onPressed: () {Navigator.pop(context);  },
         ),
-        titleTextStyle: const TextStyle(
-            color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold
-        ),
-        elevation: 1,
+        // titleTextStyle: const TextStyle(
+        //     color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold
+        // ),
+        elevation: 0,
         title: const Text('Schedule'),
 
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-           DatePicker(
-             DateTime.now(),
-             height: mediaQuery.height/10,
-             initialSelectedDate: DateTime.now(),
-             selectionColor: Colors.green,
-             selectedTextColor: Colors.white,
-             width: mediaQuery.width/8.5,
-             dayTextStyle: const TextStyle(
-               fontSize: 12
-             ),
-            dateTextStyle: const TextStyle(
-                fontSize: 14,fontWeight: FontWeight.bold
-            ),
-             onDateChange: (date){
-                debugPrint('${DateFormat('EEEE').format(date)} Date') ;
-                weekScheduleTime=DateFormat('EEEE').format(date);
-               cubit.getDateToScheduleTable(AppCubit.get(context).database,date:DateFormat.yMMMd().format(date).toString());
-
-             },
+      body: Column(
+        children: [
+         DatePicker(
+           DateTime.now(),
+           height: mediaQuery.height/9,
+           initialSelectedDate: DateTime.now(),
+           selectionColor: Colors.green,
+           selectedTextColor: Colors.white,
+           width: mediaQuery.width/8,
+           dayTextStyle:  TextStyle(
+             fontSize: 12,color: Theme.of(context).textTheme.subtitle1!.color
            ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: MyDivider(),
-            ),
-            Row(
+          dateTextStyle:  TextStyle(
+              fontSize: 12,fontWeight: FontWeight.bold,color: Theme.of(context).textTheme.subtitle1!.color
+          ),
+           monthTextStyle:TextStyle(
+               fontSize: 12,fontWeight: FontWeight.bold,color: Theme.of(context).textTheme.subtitle1!.color
+           ),
+           onDateChange: (date){
+              weekScheduleTime=DateFormat('EEEE').format(date);
+             cubit.getDateToScheduleTable(AppCubit.get(context).database,date:DateFormat.yMMMd().format(date).toString());
+
+           },
+         ),
+          const Padding(
+            padding: EdgeInsets.all(2.0),
+            child: MyDivider(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
+            child: Row(
               children:  [
-                Text(weekScheduleTime,style: const TextStyle(
-                  fontSize: 16,fontWeight: FontWeight.bold
+                Text(weekScheduleTime,style:  TextStyle(
+                  fontSize: 16,fontWeight: FontWeight.bold,color: Theme.of(context).textTheme.subtitle1!.color
                 ),),
                 const Spacer(),
-                Text(scheduleTime,style: const TextStyle(
-                  fontSize: 14,fontWeight: FontWeight.w500
+                Text(scheduleTime,style:  TextStyle(
+                  fontSize: 14,fontWeight: FontWeight.w500,color: Theme.of(context).textTheme.subtitle1!.color
                 ),)
 
               ],
             ),
-           Expanded(
-             child: MyTaskFullWidget(
-          height: mediaQuery.height/8,
-          list: AppCubit.get(context).scheduleTasks,
-          buttonHeight: mediaQuery.height/16,
-          addTask: false,
-          isChecked: isChecked),
-           )
-          ],
-        ),
+          ),
+         Expanded(
+           child: MyTaskFullWidget(
+        height: mediaQuery.height/8,
+        list: AppCubit.get(context).scheduleTasks,
+        buttonHeight: mediaQuery.height/16,
+        addTask: false,
+        isChecked: isChecked),
+         )
+        ],
       ),
     );
   },
