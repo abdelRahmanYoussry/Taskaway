@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../Local/cash_helper.dart';
@@ -18,22 +19,20 @@ class AppCubit extends Cubit<AppState> {
   List<Map> unCompleteTasks = [];
   List<Map> favouriteTasks = [];
   List<Map> scheduleTasks = [];
-
   void changeCheckBox(bool checked){
-
     isChecked= checked;
     emit(ChangeCheckBox());
   }
 
   void createDataBase()  {
     openDatabase(
-      'todo2.db',
+      'tasks.db',
       version: 1,
       onCreate: (database, version) {
         debugPrint("database has created");
         database
             .execute(
-            'CREATE TABLE tasks (id INTEGER PRIMARY KEY,title TEXT,date TEXT,time TEXT,status TEXT)')
+            'CREATE TABLE Taskawy (id INTEGER PRIMARY KEY,title TEXT,date TEXT,time TEXT,status TEXT,startTime TEXT,reminder TEXT,body TEXT)')
             .then((value) {
           debugPrint("Table has created");
         }).catchError((error) {
@@ -49,17 +48,24 @@ class AppCubit extends Cubit<AppState> {
       emit(CreateDataBase());
     });
   }
+
+
+
+
   insertToDataBase(
       {required String title,
         required String date,
         required String time,
+        required String startTime,
+        required String reminder,
+        required String body,
         //  bool isChecked=false,
         // required Color taskColor,
 
       }) async {
     await database.transaction((txn) {
       return txn.rawInsert(
-          'INSERT INTO tasks(title, date, time, status) VALUES( "$title", "$date", "$time", "all" )')
+          'INSERT INTO Taskawy(title, date, time, status, startTime, reminder, body) VALUES( "$title", "$date", "$time", "all", "$startTime", "$reminder", "$body")')
           .then((value) {
         debugPrint("$value inserted successfully");
         getDataFromDataBase(database);
@@ -77,9 +83,9 @@ class AppCubit extends Cubit<AppState> {
     completeTasks=[];
     favouriteTasks=[];
     unCompleteTasks=[];
-    dataBase.rawQuery('SELECT * FROM tasks').then((value) {
+    dataBase.rawQuery('SELECT * FROM Taskawy').then((value) {
       value.forEach((element) {
-        debugPrint(element['status']);
+        // debugPrint(element['status']);
         allTasks.add(element);
          if(element['status']=='complete') {
           completeTasks.add(element);
@@ -99,12 +105,10 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-
-
   void getDateToScheduleTable (dataBase,{required String date})
   {
    scheduleTasks.clear();
-    dataBase.rawQuery('SELECT * FROM tasks WHERE date = ?', [date]).then((value) {
+    dataBase.rawQuery('SELECT * FROM Taskawy WHERE date = ?', [date]).then((value) {
       value.forEach((element) {
         // debugPrint(element['date']+'abbbbbbbbbbbbbbbbbbbbb');
         if(element['date']==date){
@@ -113,27 +117,51 @@ class AppCubit extends Cubit<AppState> {
 
       }
       });
+
       emit(GetFromScheduleTable());
     });
   }
 
-  void updateData({required String status,required int id})
+  void changeStatus({required String status,required int id})
   {
     database.rawUpdate(
-        'UPDATE tasks SET status = ? WHERE id = ?',
+        'UPDATE Taskawy SET status = ? WHERE id = ?',
         [status, id]
     ).then((value) {
-      // debugPrint(value.toString());
+      debugPrint(value.toString());
       getDataFromDataBase(database);
-      emit(UpdateDataBase());
+      // getDateToScheduleTable(database, date: DateFormat.yMMMd().format(DateTime.now()));
+      emit(ChangeStatus());
+
 
     });
   }
 
+  void updateData({
+    required String title,
+    required String body,
+    required String startTime,
+    required String endTime,
+    required String reminder,
+    required int id})
+  {
+    database.rawUpdate(
+        'UPDATE Taskawy SET title = ?, body = ?, startTime = ?, time = ?, reminder = ?  WHERE id = ?',
+        [title,body,startTime,endTime,reminder, id]
+    ).then((value) {
+      debugPrint(value.toString());
+      getDataFromDataBase(database);
+      emit(UpdateTask());
+
+
+    });
+  }
+
+
   void deleteData({required int id})
   {
     database.rawDelete(
-        'DELETE FROM tasks WHERE id = ?', [id]).then((value) {
+        'DELETE FROM Taskawy WHERE id = ?', [id]).then((value) {
       getDataFromDataBase(database);
       emit(DeleteFromDataBase());
     });

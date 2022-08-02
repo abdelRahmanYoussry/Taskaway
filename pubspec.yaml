@@ -47,6 +47,9 @@ dependencies:
   conditional_builder_null_safety: ^0.0.6
   flutter_local_notifications:
   flutter_native_timezone: ^2.0.0
+  font_awesome_flutter: ^10.1.0
+  fluttertoast: ^8.0.8
+
 
 
 dev_dependencies:

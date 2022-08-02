@@ -9,6 +9,7 @@ import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/Local/cash_helper.
 import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/Divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../Shared/AppCubit/Notifications.dart';
 import 'Schedule.dart';
@@ -42,6 +43,7 @@ class BoardScreen extends StatelessWidget {
                 }, icon: AppCubit.get(context).isDark? Icon(Icons.nightlight_round): Icon(Icons.brightness_4_outlined)),
                 const Spacer(),
                 IconButton(onPressed: (){
+                  AppCubit.get(context).getDateToScheduleTable(AppCubit.get(context).database, date: DateFormat.yMMMd().format(DateTime.now()));
                   navigateTo(context, widget:  ScheduleScreen());
                 }, icon: Icon(Icons.calendar_today_outlined,color: Theme.of(context).textTheme.subtitle1!.color,) )
               ],
@@ -61,11 +63,11 @@ class BoardScreen extends StatelessWidget {
                         fontSize: 12,
                       ),
                       indicatorColor: Theme.of(context).textTheme.subtitle1!.color,
-                      physics:BouncingScrollPhysics(),
+                      physics:const BouncingScrollPhysics(),
                       unselectedLabelColor: Colors.grey,
                       indicatorWeight: 2,
                       indicatorSize:TabBarIndicatorSize.label,
-                      tabs: [
+                      tabs: const [
                         Tab(text:'All' ),
                         Tab(text:'Completed'),
                         Tab(text:'uncompleted' ),

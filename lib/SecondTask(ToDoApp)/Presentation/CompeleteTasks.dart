@@ -23,9 +23,11 @@ class CompleteTasksScreen extends StatelessWidget {
   },
   builder: (context, state) {
     return MyTaskFullWidget(
-        height: mediaQuery.height/8,
+        height: mediaQuery.height/6,
+        changeStatus: true,
         list: AppCubit.get(context).completeTasks,
         addTask: true,
+        showBody: false,
         buttonHeight: mediaQuery.height/16,
         isChecked: isChecked);
   },

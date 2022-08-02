@@ -24,8 +24,10 @@ class FavouriteTasksScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return MyTaskFullWidget(
-            height: mediaQuery.height/8,
+            height: mediaQuery.height/6,
             list: AppCubit.get(context).favouriteTasks,
+            changeStatus: true,
+            showBody: false,
             buttonHeight: mediaQuery.height/16,
             addTask: true,
             isChecked: isChecked);

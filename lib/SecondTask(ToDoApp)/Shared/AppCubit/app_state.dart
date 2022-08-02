@@ -13,7 +13,8 @@ class InsertToDataBase extends AppState{}
 class GetFromDataBase extends AppState{}
 class GetFromScheduleTable extends AppState{}
 class DataBaseLoading extends AppState{}
-class UpdateDataBase extends AppState{}
+class ChangeStatus extends AppState{}
+class UpdateTask extends AppState{}
 class DeleteFromDataBase extends AppState{}
 class ChangeAppMode extends AppState{}
 

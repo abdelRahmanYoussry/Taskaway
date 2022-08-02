@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../FirstTask(OnBoardingLogin,Register)/Componets/Componets.dart';
 import '../../FirstTask(OnBoardingLogin,Register)/Componets/ElevatedButton.dart';
 import '../Presentation/AddTask.dart';
+import '../Presentation/TaskDetails.dart';
 import '../Shared/AppCubit/app_cubit.dart';
 import 'Divider.dart';
 import 'TasksWidget.dart';
@@ -17,11 +18,15 @@ class MyTaskFullWidget extends StatelessWidget {
      List <Map>list;
      bool isChecked;
      bool addTask;
+     bool changeStatus;
+     bool showBody;
      MyTaskFullWidget ({Key? key,
      required this.height,
      required this.list,
      required this.buttonHeight,
      required this.isChecked,
+     required this.changeStatus,
+     required this.showBody,
      required this.addTask,
    }) : super(key: key);
 
@@ -48,6 +53,8 @@ class MyTaskFullWidget extends StatelessWidget {
                     child: TasksWidget(
                         model:list[index] ,
                         height: height,
+                        showBody: showBody,
+                        changeStatus: changeStatus,
                         isChecked: list[index]['status']=='complete'?true:false,
                         popUpMenuColor: Theme.of(context).backgroundColor,
                         taskTitleColor: Colors.white,
@@ -56,10 +63,12 @@ class MyTaskFullWidget extends StatelessWidget {
                         taskColor: taskColor,
                         onChanged: (value){
                           isChecked=true;
-                          if(value==true) {
-                            AppCubit.get(context).updateData(status: 'complete', id: list[index]['id'] );
-                          }else{
-                            AppCubit.get(context).updateData(status: 'unComplete', id: list[index]['id'] );
+                          if(value==true)
+                          {
+                            AppCubit.get(context).changeStatus(status: 'complete', id: list[index]['id'] );
+                          }
+                          else{
+                            AppCubit.get(context).changeStatus(status: 'unComplete', id: list[index]['id'] );
 
                           }
                         },

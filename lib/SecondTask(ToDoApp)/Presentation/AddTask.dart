@@ -2,6 +2,7 @@ import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/AllTasks.dar
 import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
 import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/TextFormField.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import '../../FirstTask(OnBoardingLogin,Register)/Componets/ElevatedButton.dart';
@@ -20,21 +21,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   var notifications= Notications();
   bool x=false;
   Color textColor = Colors.white;
-  Color textColor2 = Colors.white;
+  String ?reminder;
   void initState() {
     notifications.intializationNotification();
    super.initState();
   }
    var titleController= TextEditingController();
+   var bodyController= TextEditingController();
    var deadLineController= TextEditingController();
    var startTimeController= TextEditingController();
    var endTimeController= TextEditingController();
-   var reminderController= TextEditingController();
-   var repeatController= TextEditingController();
    var formKey=GlobalKey<FormState>();
    List reminderList=[
      '1 day before', '1 hour before', '30 min before', '10 min before',];
-   List repeatList=['Daily', 'Weekly'];
   @override
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;
@@ -50,7 +49,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         // titleTextStyle: const TextStyle(
         //     color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold
         // ),
-        elevation: 0.5,
+        elevation: 0.0,
         title: const Text('Add task'),
 
       ),
@@ -81,6 +80,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     if (value.isEmpty) {
                       return "Title Can't be Empty";
                     }
+                    if (value.toString().length>20) {
+                      return "Title Can't be More than 20 character";
+                    }
                     return null;
                   },
                   readOnly: false,
@@ -92,6 +94,41 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   type: TextInputType.text,
                   hint: 'Task Title',
                   control: titleController,
+                  textColor: Theme.of(context).textTheme.subtitle1!.color!,
+                  isPassword: false,),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text('Note',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.subtitle1!.color,fontSize: 18,fontWeight: FontWeight.bold ,),),
+                ),
+                MyTextFormField(
+                  textInputFormat:"[a-z A-Z0-9 ]",
+                  labelColor: Colors.white,
+                  hintStyle: TextStyle(
+                      fontSize: 10,
+                      color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
+                  ),
+                  onChanged: (value){},
+                  onTap: (){},
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Task Details Can't be Empty";
+                    }
+                    return null;
+                  },
+                  readOnly: false,
+                  onSubmit: (value){
+                    value=titleController.text;
+                  },
+                  borderColor: Colors.grey[200]!,
+                  backgroundColor: Colors.grey[200]!,
+                  type: TextInputType.text,
+                  hint: 'Task body',
+                  control: bodyController,
                   textColor: Theme.of(context).textTheme.subtitle1!.color!,
                   isPassword: false,),
                 const SizedBox(
@@ -118,6 +155,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       lastDate: DateTime.parse('2025-12-01'),
                     ).then((value) {
                       deadLineController.text = DateFormat.yMMMd().format(value!);
+                    }).catchError((error) {
+                      FocusScope.of(context).unfocus();
                     });
 
                   },
@@ -156,6 +195,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           child: MyTextFormField(
                             labelColor: Colors.white,
                             onChanged: (value){},
+                            suffixClicked: (){},
                             hintStyle: TextStyle(
                                 fontSize: 10,
                                 color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
@@ -168,6 +208,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 startTimeController.text = value!.format(context).toString();
 
                                 debugPrint(value.format(context));
+                              }).catchError((error) {
+                                FocusScope.of(context).unfocus();
                               });
                             },
                             validator: (value) {
@@ -204,6 +246,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           child: MyTextFormField(
                             labelColor: Colors.white,
                             onChanged: (value){},
+                            suffixClicked: (){},
                             hintStyle: TextStyle(
                                 fontSize: 10,
                                 color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
@@ -214,9 +257,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   initialTime: TimeOfDay.now())
                                   .then((value) {
                                 endTimeController.text = value!.format(context).toString();
-
                                 debugPrint(value.format(context));
-                              });
+                              }).catchError((error) {
+                                FocusScope.of(context).unfocus();
+                              });;
                             },
                             validator: (value) {
                               if (value.isEmpty) {
@@ -251,84 +295,41 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-               Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200]!,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            height:mediaQuery.height/10 ,
-            child: myDropDownMenu(
-                hint:  Text('1 hour before',style: TextStyle(
-                  color: Theme.of(context).textTheme.subtitle1!.color!,fontSize: 12,
-                ),),
-                borderColor:Colors.grey[300]! ,
-                height:mediaQuery.height/10 ,
-                textColor: textColor,
-                myDropDownItems: reminderList.map((e) {
-                  return DropdownMenuItem(
-                      value: e,
-                      child: Row(
-                        children: [
-                          Text(e,
-                          ),
-                          const SizedBox(
-                            width:60,
-                          ),
-                        ],
-                      )
-                  );
-                }).toList(),
-                validator: (value){},
-                onChange: (value){
-                 // setState((){
-                 //   textColor=Colors.black;
-                 // });
-                }),
-          ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                // const Padding(
-                //   padding: EdgeInsets.symmetric(vertical: 10.0),
-                //   child: Text('Repeat',
-                //     style: TextStyle(
-                //       color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold ,),),
-                // ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: Colors.grey[200]!,
-                //     borderRadius: BorderRadius.circular(10),
-                //   ),
-                //   height:mediaQuery.height/12 ,
-                //   child: myDropDownMenu(
-                //       labelColor:Colors.white ,
-                //       textColor: textColor2,
-                //       hint: const Text('Daily',style: TextStyle(
-                //         color: Colors.black,fontSize: 12,
-                //       ),),
-                //       borderColor:Colors.grey[200]! ,
-                //       height:mediaQuery.height/14 ,
-                //       myDropDownItems: repeatList.map((e) {
-                //         return DropdownMenuItem(
-                //             value: e,
-                //             child: Row(
-                //               children: [
-                //                 Text(e,
-                //                 ),
-                //                 const SizedBox(
-                //                   width:60,
-                //                 ),
-                //               ],
-                //             )
-                //         );
-                //       }).toList(),
-                //       validator: (value){},
-                //       onChange: (value){
-                //         setState((){
-                //           textColor2=Colors.black;
-                //         });
-                //       }),
-                // ),
+               myDropDownMenu(
+                   hint:  Text('Remind Me',style: TextStyle(
+                     color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3),fontSize: 12,
+                   ),),
+                   borderColor:Colors.grey[300]! ,
+                   height:mediaQuery.height/10 ,
+                   textColor: textColor,
+                   myDropDownItems: reminderList.map((e) {
+                     return DropdownMenuItem(
+                         value: e,
+                         child: Row(
+                           children: [
+                             Text(e,
+                             ),
+                             const SizedBox(
+                               width:60,
+                             ),
+                           ],
+                         )
+                     );
+                   }).toList(),
+                   validator: ( value){
+                     if (value==null) {
+                       return "Reminder Can't be Empty";
+                     }
+                     else {
+                       reminder=value;
+                     }
+                   },
+                   onChange: (value){
+
+                    // setState((){
+                    //   textColor=Colors.black;
+                    // });
+                   }),
                  SizedBox(
                   height: mediaQuery.height/14.toDouble(),
                 ),
@@ -345,7 +346,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                        AppCubit.get(context).insertToDataBase(
                            title: titleController.text,
                            date: deadLineController.text,
-                           time: endTimeController.text);
+                           time: endTimeController.text,
+                           startTime: startTimeController.text,
+                           reminder:reminder!,
+                           body: bodyController.text,
+                       );
                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BoardScreen()), (route) => false);
                        await notifications.displayNotification( );
 
@@ -375,60 +380,53 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     required Color textColor ,
 
    }) {
-     return Container(
-       color: Theme.of(context).backgroundColor,
-       child: DropdownButtonFormField(
-            elevation: 6,
-           borderRadius:BorderRadius.circular(30) ,
-           onTap:(){} ,
-           validator: validator,
-           hint: hint,
-           decoration: InputDecoration(
-             hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1!.color!),
-             errorStyle:  const TextStyle(
-                 fontSize: 12,
-                 color: Colors.red),
-             labelStyle: TextStyle(color: labelColor, fontSize: 12
-             ),
-             errorBorder:OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(10),
-                 borderSide: const BorderSide(
-                     width: 2,color: Colors.red
-                 )
-             ),
-             focusedBorder: OutlineInputBorder(
+     return DropdownButtonFormField(
+          elevation: 6,
+         borderRadius:BorderRadius.circular(30) ,
+         onTap:(){} ,
+         validator: validator,
+         hint: hint,
+         decoration: InputDecoration(
+           hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1!.color!),
+           errorStyle:  const TextStyle(
+               fontSize: 12,
+               color: Colors.red),
+           labelStyle: TextStyle(color: labelColor, fontSize: 12
+           ),
+           errorBorder:OutlineInputBorder(
                borderRadius: BorderRadius.circular(10),
-               borderSide: BorderSide(width: 3,color: Theme.of(context).textTheme.subtitle1!.color!
-               ),
-             ),
-             enabledBorder: OutlineInputBorder(
-                 borderRadius: BorderRadius.circular(10),
-                 borderSide: BorderSide(
-                     width: 3,color: borderColor
-                 )
+               borderSide: const BorderSide(
+                   width: 3,color: Colors.red
+               )
+           ),
+           focusedBorder: OutlineInputBorder(
+             borderRadius: BorderRadius.circular(10),
+             borderSide: BorderSide(width: 3,color: Theme.of(context).textTheme.subtitle1!.color!
              ),
            ),
-           dropdownColor: Theme.of(context).backgroundColor,
-           style:  TextStyle(
-             color: Theme.of(context).textTheme.subtitle1!.color!, fontSize: 14
+           enabledBorder: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(10),
+               borderSide: BorderSide(
+                   width: 3,color: borderColor
+               )
            ),
-           iconEnabledColor: Colors.grey[400],
-           isExpanded: false,
-           icon: const Icon(Icons.arrow_drop_down),
-           iconSize: 20,
-           menuMaxHeight:MediaQuery.of(context).size.height/5 ,
-           focusColor: Colors.limeAccent,
-           value: myDropDownValue,
-           onChanged: (value) {
-             // print(x.toString()+' on change');
-             setState((){
-               // print(x.toString()+' on Change + onchange');
-               // textColor=Colors.black;
-             }
-             );
-             onChange!(value);
-           },
-           items: myDropDownItems),
-     );
+         ),
+         dropdownColor: Theme.of(context).backgroundColor,
+         style:  TextStyle(
+           color: Theme.of(context).textTheme.subtitle1!.color!, fontSize: 14
+         ),
+         iconEnabledColor: Colors.grey[400],
+         isExpanded: false,
+         icon: const Icon(Icons.arrow_drop_down),
+         iconSize: 20,
+         menuMaxHeight:MediaQuery.of(context).size.height/5 ,
+         focusColor: Colors.limeAccent,
+         value: myDropDownValue,
+         onChanged: (value) {
+           onChange!(value);
+         },
+         items: myDropDownItems);
    }
+
+
 }

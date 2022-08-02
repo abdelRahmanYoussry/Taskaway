@@ -1,9 +1,13 @@
+import 'package:algorizainternship/FirstTask(OnBoardingLogin,Register)/Componets/Componets.dart';
+import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/TaskDetails.dart';
 import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 
 class TasksWidget extends StatelessWidget {
   String taskName;
   bool isChecked;
+  bool changeStatus;
+  bool showBody;
   Function onChanged;
   Color checkBoxFillColor;
   Color checkColor;
@@ -17,6 +21,8 @@ class TasksWidget extends StatelessWidget {
  required this.isChecked,
  required this.taskName,
  required this.onChanged,
+  required this.changeStatus,
+  required this.showBody,
  required this.checkBoxFillColor,
  required this.checkColor,
  required this.height,
@@ -30,32 +36,34 @@ class TasksWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mediaQuery=MediaQuery.of(context).size;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),height: height,
-      decoration: BoxDecoration(
-          color: taskColor,
-          borderRadius: BorderRadius.circular(20)
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                model['time'],style: const TextStyle(
-                color: Colors.white,fontSize: 18,fontWeight: FontWeight.w400,),
-              ),
-              const Spacer(),
-              Text(
-                model['date'],style: const TextStyle(
-                color: Colors.white,fontSize: 18,fontWeight: FontWeight.w400,),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5,),
-          Expanded(
-            child: Row(
+    return InkWell(
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),height: height,
+        decoration: BoxDecoration(
+            color: taskColor,
+            borderRadius: BorderRadius.circular(20)
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
+                Text(
+                  model['time'],style: const TextStyle(
+                  color: Colors.white,fontSize: 16,fontWeight: FontWeight.w400,),
+                ),
+                const Spacer(),
+                Text(
+                  model['date'],style: const TextStyle(
+                  color: Colors.white,fontSize: 16,fontWeight: FontWeight.w400,),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8,),
+            Row(
+              children: [
+                if(changeStatus==true)
                 Transform.scale(
                   scale: 2,
                   child: Checkbox(
@@ -75,11 +83,20 @@ class TasksWidget extends StatelessWidget {
                       }),
                 ),
                  const SizedBox(width: 5,),
-                 Text(
-                  model['title'],style:  TextStyle(
-                  color: taskTitleColor,fontSize: 18,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),
-                ),
-                const Spacer(),
+                 Expanded(
+                   child: showBody==true? Center(
+                     child: Text(
+                       model['title'],style:  TextStyle(
+                         color: taskTitleColor,fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),maxLines: 1,
+                     ),
+                   ):
+                   Text(
+                     model['title'],style:  TextStyle(
+                       color: taskTitleColor,fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),maxLines: 2,
+                   )
+                 ),
+                // const Spacer(),
+                if(changeStatus==true)
                 PopupMenuButton(itemBuilder: (context)=>
                 [
                    PopupMenuItem(value:MenuItem.item1, child: Container(
@@ -120,8 +137,8 @@ class TasksWidget extends StatelessWidget {
                   ) ),
                 ],onSelected: (value){
                   if(value==MenuItem.item1){
-                    debugPrint(MenuItem.item1.toString());
-                    AppCubit.get(context).updateData(status: 'favourite', id: model['id']);
+                    // debugPrint(MenuItem.item1.toString());
+                    AppCubit.get(context).changeStatus(status: 'favourite', id: model['id']);
                   }
                   else if(value==MenuItem.item4){
                     AppCubit.get(context).deleteData(id: model['id']);
@@ -130,20 +147,30 @@ class TasksWidget extends StatelessWidget {
                   else if(value==MenuItem.item2){
                     // taskColor=Colors.green;
                     // taskTitleColor=Colors.white;
-                    AppCubit.get(context).updateData(status: 'complete', id: model['id']);
+                    AppCubit.get(context).changeStatus(status: 'complete', id: model['id']);
                   }
                   else if(value==MenuItem.item3){
-                    taskColor=Colors.brown;
-                    taskTitleColor=Colors.white;
-                    AppCubit.get(context).updateData(status: 'unComplete', id: model['id']);
+                    // taskColor=Colors.brown;
+                    // taskTitleColor=Colors.white;
+                    AppCubit.get(context).changeStatus(status: 'unComplete', id: model['id']);
                   }
                 },color:popUpMenuColor ,child: Icon(color: Colors.white,Icons.menu ),
                 ),
               ],
             ),
-          ),
-        ],
+            if(showBody==true)
+            Expanded(
+              child: Text(
+                model['body'],style: const TextStyle(
+                color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400,),
+              ),
+            ),
+          ],
+        ),
       ),
+      onLongPress: (){
+          navigateTo(context, widget: TaskDetailsScreen(detailsModel: model,taskColor: taskColor,));
+      },
     );
 
   }
