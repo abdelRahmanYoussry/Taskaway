@@ -2,9 +2,8 @@ import 'dart:ffi';
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
-
-import '../../FirstTask(OnBoardingLogin,Register)/Componets/Componets.dart';
-import '../../FirstTask(OnBoardingLogin,Register)/Componets/ElevatedButton.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/Componets.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/ElevatedButton.dart';
 import '../Presentation/AddTask.dart';
 import '../Presentation/TaskDetails.dart';
 import '../Shared/AppCubit/app_cubit.dart';
@@ -15,14 +14,14 @@ class MyTaskFullWidget extends StatelessWidget {
      Color taskColor=Colors.black;
      double height;
      double buttonHeight;
-     List <Map>list;
+     List <Map>Taskslist;
      bool isChecked;
      bool addTask;
      bool changeStatus;
      bool showBody;
      MyTaskFullWidget ({Key? key,
      required this.height,
-     required this.list,
+     required this.Taskslist,
      required this.buttonHeight,
      required this.isChecked,
      required this.changeStatus,
@@ -39,36 +38,36 @@ class MyTaskFullWidget extends StatelessWidget {
             builder:(context)=> ListView.separated(
                 shrinkWrap: true,
                 itemBuilder:(context,index){
-                  if(list[index]['status']=='complete'){
+                  if(Taskslist[index]['status']=='complete'){
                     taskColor=Colors.green;
                   }
-                  else if(list[index]['status']=='unComplete'||list[index]['status']=='all'){
+                  else if(Taskslist[index]['status']=='unComplete'||Taskslist[index]['status']=='all'){
                     taskColor=Colors.red;
                   }
-                  else if  (list[index]['status']=='favourite'){
+                  else if  (Taskslist[index]['status']=='favourite'){
                     taskColor=Colors.amber;
                   }
                   return  Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.symmetric(vertical: 20,horizontal:10),
                     child: TasksWidget(
-                        model:list[index] ,
+                        model:Taskslist[index] ,
                         height: height,
                         showBody: showBody,
                         changeStatus: changeStatus,
-                        isChecked: list[index]['status']=='complete'?true:false,
+                        isChecked: Taskslist[index]['status']=='complete'?true:false,
                         popUpMenuColor: Theme.of(context).backgroundColor,
                         taskTitleColor: Colors.white,
                         checkBorderColor: Colors.white,
-                        taskName: list[index]['title'],
+                        taskName: Taskslist[index]['title'],
                         taskColor: taskColor,
                         onChanged: (value){
                           isChecked=true;
                           if(value==true)
                           {
-                            AppCubit.get(context).changeStatus(status: 'complete', id: list[index]['id'] );
+                            AppCubit.get(context).changeStatus(status: 'complete', id: Taskslist[index]['id'] );
                           }
                           else{
-                            AppCubit.get(context).changeStatus(status: 'unComplete', id: list[index]['id'] );
+                            AppCubit.get(context).changeStatus(status: 'unComplete', id: Taskslist[index]['id'] );
 
                           }
                         },
@@ -76,7 +75,7 @@ class MyTaskFullWidget extends StatelessWidget {
                         , checkColor: Colors.black),
                   );},
                 separatorBuilder: (context,index)=>const MyDivider(),
-                itemCount: list.length),
+                itemCount: Taskslist.length),
             fallback:(context)=>Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +93,7 @@ class MyTaskFullWidget extends StatelessWidget {
                 ],
               ),
             ) ,
-            condition:list.isNotEmpty ,
+            condition:Taskslist.isNotEmpty ,
           ),
         ),
           if(addTask==true)

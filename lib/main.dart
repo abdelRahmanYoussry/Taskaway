@@ -1,5 +1,4 @@
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/Local/cash_helper.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Style/Themes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'SecondTask(ToDoApp)/Presentation/Board.dart';
 import 'SecondTask(ToDoApp)/Shared/AppCubit/BlocObserver.dart';
 import 'SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
+import 'SecondTask(ToDoApp)/Shared/Local/cash_helper.dart';
+import 'SecondTask(ToDoApp)/Style/Themes.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

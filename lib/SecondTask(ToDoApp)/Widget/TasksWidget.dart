@@ -1,7 +1,9 @@
-import 'package:algorizainternship/FirstTask(OnBoardingLogin,Register)/Componets/Componets.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/TaskDetails.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
+
 import 'package:flutter/material.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/Componets.dart';
+
+import '../Presentation/TaskDetails.dart';
+import '../Shared/AppCubit/app_cubit.dart';
 
 class TasksWidget extends StatelessWidget {
   String taskName;
@@ -38,8 +40,8 @@ class TasksWidget extends StatelessWidget {
     var mediaQuery=MediaQuery.of(context).size;
     return InkWell(
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),height: height,
+        width: double.infinity,height: height,
+        padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
         decoration: BoxDecoration(
             color: taskColor,
             borderRadius: BorderRadius.circular(20)
@@ -47,20 +49,24 @@ class TasksWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Text(
-                  model['time'],style: const TextStyle(
-                  color: Colors.white,fontSize: 16,fontWeight: FontWeight.w400,),
-                ),
-                const Spacer(),
-                Text(
-                  model['date'],style: const TextStyle(
-                  color: Colors.white,fontSize: 16,fontWeight: FontWeight.w400,),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
+              child: Row(
+                children: [
+                  Text(
+                    model['time'],style: const TextStyle(
+                    color: Colors.white,fontSize: 16,fontWeight: FontWeight.w400,),
+                  ),
+                  const Spacer(),
+                  Text(
+                    model['date'],style: const TextStyle(
+                    color: Colors.white,fontSize: 16,fontWeight: FontWeight.w400,),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 8,),
+            // const SizedBox(height: 5,),
+            //Row for CheckBox and Title
             Row(
               children: [
                 if(changeStatus==true)
@@ -88,8 +94,7 @@ class TasksWidget extends StatelessWidget {
                      child: Text(
                        model['title'],style:  TextStyle(
                          color: taskTitleColor,fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),maxLines: 1,
-                     ),
-                   ):
+                     ),):
                    Text(
                      model['title'],style:  TextStyle(
                        color: taskTitleColor,fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),maxLines: 2,
@@ -158,11 +163,16 @@ class TasksWidget extends StatelessWidget {
                 ),
               ],
             ),
+            //body Of the Task
             if(showBody==true)
             Expanded(
-              child: Text(
-                model['body'],style: const TextStyle(
-                color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400,),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  model['body'],style: const TextStyle(
+                  color: Colors.white,fontSize: 14,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),
+                  maxLines: 3,
+                ),
               ),
             ),
           ],

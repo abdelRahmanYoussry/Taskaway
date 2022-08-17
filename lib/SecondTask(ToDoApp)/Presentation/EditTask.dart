@@ -1,10 +1,13 @@
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/Componets.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/ElevatedButton.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/TextFormField.dart';
 
-import '../../FirstTask(OnBoardingLogin,Register)/Componets/ElevatedButton.dart';
-import '../../FirstTask(OnBoardingLogin,Register)/Componets/TextFormField.dart';
+import '../Shared/AppCubit/app_cubit.dart';
+import '../Widget/DropDownMenu.dart';
+import 'Board.dart';
 
 class EditTaskScreen extends StatelessWidget {
    EditTaskScreen({Key? key,required this.editModel}) : super(key: key);
@@ -41,9 +44,6 @@ class EditTaskScreen extends StatelessWidget {
               icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {Navigator.pop(context);  },
             ),
-            // titleTextStyle: const TextStyle(
-            //     color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold
-            // ),
             elevation: 0.0,
             title: const Text('Edit task'),
 
@@ -65,10 +65,6 @@ class EditTaskScreen extends StatelessWidget {
                     MyTextFormField(
                       textInputFormat:"[a-z A-Z0-9 ]",
                       labelColor: Colors.white,
-                      // hintStyle: TextStyle(
-                      //     fontSize: 10,
-                      //     color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                      // ),
                       onChanged: (value){},
                       onTap: (){},
                       validator: (value) {
@@ -103,10 +99,6 @@ class EditTaskScreen extends StatelessWidget {
                     MyTextFormField(
                       textInputFormat:"[a-z A-Z0-9 ]",
                       labelColor: Colors.white,
-                      // hintStyle: TextStyle(
-                      //     fontSize: 10,
-                      //     color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                      // ),
                       onChanged: (value){},
                       onTap: (){},
                       validator: (value) {
@@ -138,10 +130,6 @@ class EditTaskScreen extends StatelessWidget {
                     MyTextFormField(
                       labelColor: Colors.white,
                       onChanged: (value){},
-                      // hintStyle: TextStyle(
-                      //     fontSize: 10,
-                      //     color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                      // ),
                       onTap: (){
                         showDatePicker(
                           context: context,
@@ -169,6 +157,7 @@ class EditTaskScreen extends StatelessWidget {
                       suffix: Icons.arrow_drop_down_sharp,
                       suffixIconColor: Colors.grey[400],
                       control: deadLineController,
+                      suffixClicked: (){},
                       textColor: Theme.of(context).textTheme.subtitle1!.color!,
                       isPassword: false,),
                     const SizedBox(
@@ -191,10 +180,6 @@ class EditTaskScreen extends StatelessWidget {
                                 labelColor: Colors.white,
                                 onChanged: (value){},
                                 suffixClicked: (){},
-                                // hintStyle: TextStyle(
-                                //     fontSize: 10,
-                                //     color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                                // ),
                                 onTap: (){
                                   showTimePicker(
                                       context: context,
@@ -242,10 +227,6 @@ class EditTaskScreen extends StatelessWidget {
                                 labelColor: Colors.white,
                                 onChanged: (value){},
                                 suffixClicked: (){},
-                                // hintStyle: TextStyle(
-                                //     fontSize: 10,
-                                //     color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                                // ),
                                 onTap: (){
                                   showTimePicker(
                                       context: context,
@@ -261,9 +242,6 @@ class EditTaskScreen extends StatelessWidget {
                                   if (value.isEmpty) {
                                     return "End Time Can't be Empty";
                                   }
-                                  // else if(value==editModel['time']){
-                                  //   return "End Time Can't be The same";
-                                  // }
                                   return null;
                                 },
                                 readOnly: true,
@@ -293,16 +271,24 @@ class EditTaskScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    myDropDownMenu(
-                        hint:  Text('$reminder',style: TextStyle(
-                          color: Theme.of(context).textTheme.subtitle1!.color!,
-                          fontSize: 18,fontWeight: FontWeight.bold
+                    MyDropDownMenuButton(
+                        height: mediaQuery.height/10,
+                        hint: Text('$reminder',style: TextStyle(
+                            color: Theme.of(context).textTheme.subtitle1!.color!,
+                            fontSize: 18,fontWeight: FontWeight.bold
                         ),),
-                        context: context,
-                        borderColor:Colors.grey[300]! ,
-                        height:mediaQuery.height/10 ,
-
+                        borderColor: Colors.grey[300]! ,
+                        validator: ( value){
+                          if (value==null) {
+                            value=reminder;
+                          }
+                          else {
+                            reminder=value;
+                          }
+                        },
                         textColor: textColor,
+                        labelColor: Theme.of(context).backgroundColor,
+                        onChange: (value){},
                         myDropDownItems: reminderList.map((e) {
                           return DropdownMenuItem(
                               value: e,
@@ -317,16 +303,7 @@ class EditTaskScreen extends StatelessWidget {
                               )
                           );
                         }).toList(),
-                        validator: ( value){
-                          if (value==null) {
-                            return "Reminder Can't be Empty";
-                          }
-
-                          else {
-                            reminder=value;
-                          }
-                        },
-                        onChange: (value){}),
+                        context: context),
                     SizedBox(
                       height: mediaQuery.height/14.toDouble(),
                     ),
@@ -346,7 +323,9 @@ class EditTaskScreen extends StatelessWidget {
                                 startTime: startTimeController.text,
                                 endTime: endTimeController.text,
                                 reminder: reminder!,
+                                date: deadLineController.text,
                                 id: editModel['id']);
+                            navigateAndFinish(context, const BoardScreen());
                           }
                         },
                         buttonName: 'Edit task',
@@ -362,65 +341,5 @@ class EditTaskScreen extends StatelessWidget {
     );
 
   }
-   Widget myDropDownMenu<listName>({
-     required Text hint,
-     className,
-     listName,
-     myDropDownValue,
-     required myDropDownItems,
-     double height=60,
-     required validator,
-     required Function? onChange,
-     Color ?borderColor ,
-     Color ?labelColor,
-     required Color textColor ,
-     context
 
-   }) {
-     return DropdownButtonFormField(
-         elevation: 5,
-         borderRadius:BorderRadius.circular(30) ,
-         onTap:(){} ,
-         validator: validator,
-         hint: hint,
-         decoration: InputDecoration(
-           // hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1!.color!,fontSize: 18),
-           errorStyle:  const TextStyle(
-               fontSize: 12,
-               color: Colors.red),
-           labelStyle: TextStyle(color: labelColor, fontSize: 12
-           ),
-           errorBorder:OutlineInputBorder(
-               borderRadius: BorderRadius.circular(10),
-               borderSide: const BorderSide(
-                   width: 3,color: Colors.red
-               )
-           ),
-           focusedBorder: OutlineInputBorder(
-             borderRadius: BorderRadius.circular(10),
-             borderSide: BorderSide(width: 3,color: Theme.of(context).textTheme.subtitle1!.color!
-             ),
-           ),
-           enabledBorder: OutlineInputBorder(
-               borderRadius: BorderRadius.circular(10),
-               borderSide: BorderSide(
-                   width: 3,color: borderColor!
-               )
-           ),
-         ),
-         dropdownColor: Theme.of(context).backgroundColor,
-         style:  TextStyle(
-             color: Theme.of(context).textTheme.subtitle1!.color!, fontSize: 18
-         ),
-         iconEnabledColor: Colors.grey[400],
-         isExpanded: false,
-         icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
-         iconSize: 20,
-         menuMaxHeight:MediaQuery.of(context).size.height/3 ,
-         value: myDropDownValue,
-         onChanged: (value) {
-           onChange!(value);
-         },
-         items: myDropDownItems);
-   }
 }

@@ -1,8 +1,5 @@
 
-import 'package:algorizainternship/FirstTask(OnBoardingLogin,Register)/Componets/Componets.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/Divider.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/FullTaskWidget.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/TasksWidget.dart';
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Shared/AppCubit/app_cubit.dart';
 import '../Widget/ElevatedButton.dart';
+import '../Widget/FullTaskWidget.dart';
 import 'AddTask.dart';
 
 
@@ -31,7 +29,7 @@ class AllTasksScreen extends StatelessWidget {
             changeStatus: true,
             addTask: true,
             showBody: false,
-            list: AppCubit.get(context).allTasks,
+            Taskslist: AppCubit.get(context).allTasks,
             buttonHeight: mediaQuery.height/16,
             isChecked: isChecked,
             );

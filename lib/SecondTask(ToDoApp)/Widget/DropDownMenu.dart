@@ -5,7 +5,7 @@ class MyDropDownMenuButton extends StatelessWidget {
   var myDropDownItems;
     double height;
     var context;
-    Function?  validator;
+    late dynamic  validator;
        Function? onChange;
       Color borderColor ;
        Color labelColor ;
@@ -30,7 +30,7 @@ class MyDropDownMenuButton extends StatelessWidget {
         elevation: 6,
         borderRadius:BorderRadius.circular(30) ,
         onTap:(){} ,
-        validator:(value) {validator;},
+        validator:validator,
         hint: hint,
         decoration: InputDecoration(
           hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1!.color!),
@@ -45,6 +45,12 @@ class MyDropDownMenuButton extends StatelessWidget {
                   width: 3,color: Colors.red
               )
           ),
+          focusedErrorBorder:OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                  width: 3,color: Colors.red
+              )
+          ) ,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(width: 3,color: Theme.of(context).textTheme.subtitle1!.color!

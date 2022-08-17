@@ -1,5 +1,4 @@
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/FullTaskWidget.dart';
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 
+import '../Shared/AppCubit/app_cubit.dart';
 import '../Widget/Divider.dart';
+import '../Widget/FullTaskWidget.dart';
 import '../Widget/TasksWidget.dart';
 
 class ScheduleScreen extends StatelessWidget {
@@ -76,7 +77,7 @@ class ScheduleScreen extends StatelessWidget {
             child: MyDivider(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 5),
             child: Row(
               children:  [
                 Text(weekScheduleTime,style:  TextStyle(
@@ -91,8 +92,8 @@ class ScheduleScreen extends StatelessWidget {
           ),
          Expanded(
            child: MyTaskFullWidget(
-        height: mediaQuery.height/8,
-        list: AppCubit.get(context).scheduleTasks,
+        height: mediaQuery.height/5,
+        Taskslist: AppCubit.get(context).scheduleTasks,
         buttonHeight: mediaQuery.height/16,
         changeStatus: false,
         showBody: true,

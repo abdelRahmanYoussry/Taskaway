@@ -1,10 +1,13 @@
-import 'package:algorizainternship/FirstTask(OnBoardingLogin,Register)/Componets/Componets.dart';
-import 'package:algorizainternship/FirstTask(OnBoardingLogin,Register)/Componets/ElevatedButton.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/EditTask.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/Componets.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/ElevatedButton.dart';
+
+import '../Shared/AppCubit/app_cubit.dart';
+import 'EditTask.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
   final Map detailsModel;
@@ -13,6 +16,7 @@ class TaskDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     var mediaQuery=MediaQuery.of(context).size;
     return BlocConsumer<AppCubit, AppState>(
   listener: (context, state) {},
@@ -54,17 +58,17 @@ class TaskDetailsScreen extends StatelessWidget {
                     const Icon(Icons.timer,color: Colors.white),
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 10,),
                 Text('${detailsModel['title']}',
                   style: const TextStyle(
-                    color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold ,),),
-                const SizedBox(height: 5),
+                    color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold ,),),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
-                      child: Text('${detailsModel['body']}',maxLines: 3,
+                      child: Text('${detailsModel['body']}',maxLines: 6,
                         style: const TextStyle(
-                          color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold ,overflow: TextOverflow.ellipsis),),
+                          color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold ,overflow: TextOverflow.ellipsis),),
                     ),
                   ],
                 ),
@@ -84,7 +88,7 @@ class TaskDetailsScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 MyElevatedButton(
-                  radius: 20,
+                  radius: 10,
                   borderWidth: 1,
                   textColor: Colors.white,
                   fontSize: 16,

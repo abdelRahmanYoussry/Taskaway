@@ -1,18 +1,17 @@
 
-import 'package:algorizainternship/FirstTask(OnBoardingLogin,Register)/Componets/Componets.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/AllTasks.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/CompeleteTasks.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/FavouriteTasks.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/UncompleteTasks.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/Local/cash_helper.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/Divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../Shared/AppCubit/Notifications.dart';
+import '../Shared/AppCubit/app_cubit.dart';
+import '../Shared/Componets/Componets.dart';
+import '../Widget/Divider.dart';
+import 'AllTasks.dart';
+import 'CompeleteTasks.dart';
+import 'FavouriteTasks.dart';
 import 'Schedule.dart';
+import 'UncompleteTasks.dart';
 
 class BoardScreen extends StatelessWidget {
    const BoardScreen({Key? key}) : super(key: key);

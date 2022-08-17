@@ -1,13 +1,13 @@
-import 'package:algorizainternship/SecondTask(ToDoApp)/Presentation/AllTasks.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Shared/AppCubit/app_cubit.dart';
-import 'package:algorizainternship/SecondTask(ToDoApp)/Widget/TextFormField.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-
-import '../../FirstTask(OnBoardingLogin,Register)/Componets/ElevatedButton.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/ElevatedButton.dart';
+import 'package:taskawy/SecondTask(ToDoApp)/Shared/Componets/TextFormField.dart';
 import '../Shared/AppCubit/Notifications.dart';
+import '../Shared/AppCubit/app_cubit.dart';
+import '../Shared/Componets/Componets.dart';
+import '../Widget/DropDownMenu.dart';
 import 'Board.dart';
+import 'Schedule.dart';
 
 class AddTaskScreen extends StatefulWidget {
    AddTaskScreen({Key? key}) : super(key: key);
@@ -18,12 +18,18 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  var notifications= Notications();
+  // var notifications= Notications();
+  late final LocalNotificationService service;
+
   bool x=false;
   Color textColor = Colors.white;
   String ?reminder;
+  @override
   void initState() {
-    notifications.intializationNotification();
+    service=LocalNotificationService();
+    service.initialize();
+    listenToNotifications();
+    // notifications.intializationNotification();
    super.initState();
   }
    var titleController= TextEditingController();
@@ -46,9 +52,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {Navigator.pop(context);  },
         ),
-        // titleTextStyle: const TextStyle(
-        //     color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold
-        // ),
+
         elevation: 0.0,
         title: const Text('Add task'),
 
@@ -62,7 +66,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               crossAxisAlignment:CrossAxisAlignment.start ,
               children:  [
                  Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text('Title',
                     style: TextStyle(
                     color: Theme.of(context).textTheme.subtitle1!.color,fontSize: 18,fontWeight: FontWeight.bold ,),),
@@ -70,10 +74,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 MyTextFormField(
                   textInputFormat:"[a-z A-Z0-9 ]",
                   labelColor: Colors.white,
-                  hintStyle: TextStyle(
-                    fontSize: 10,
-                    color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                  ),
                   onChanged: (value){},
                   onTap: (){},
                   validator: (value) {
@@ -100,7 +100,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text('Note',
                     style: TextStyle(
                       color: Theme.of(context).textTheme.subtitle1!.color,fontSize: 18,fontWeight: FontWeight.bold ,),),
@@ -108,10 +108,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 MyTextFormField(
                   textInputFormat:"[a-z A-Z0-9 ]",
                   labelColor: Colors.white,
-                  hintStyle: TextStyle(
-                      fontSize: 10,
-                      color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                  ),
                   onChanged: (value){},
                   onTap: (){},
                   validator: (value) {
@@ -143,10 +139,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 MyTextFormField(
                   labelColor: Colors.white,
                   onChanged: (value){},
-                  hintStyle: TextStyle(
-                      fontSize: 10,
-                      color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                  ),
                   onTap: (){
                     showDatePicker(
                       context: context,
@@ -196,10 +188,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             labelColor: Colors.white,
                             onChanged: (value){},
                             suffixClicked: (){},
-                            hintStyle: TextStyle(
-                                fontSize: 10,
-                                color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                            ),
                             onTap: (){
                               showTimePicker(
                                   context: context,
@@ -247,10 +235,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             labelColor: Colors.white,
                             onChanged: (value){},
                             suffixClicked: (){},
-                            hintStyle: TextStyle(
-                                fontSize: 10,
-                                color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3)
-                            ),
                             onTap: (){
                               showTimePicker(
                                   context: context,
@@ -292,17 +276,25 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     style: TextStyle(
                       color: Theme.of(context).textTheme.subtitle1!.color!,fontSize: 18,fontWeight: FontWeight.bold ,),),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-               myDropDownMenu(
-                   hint:  Text('Remind Me',style: TextStyle(
+               MyDropDownMenuButton(
+                   height:mediaQuery.height/10,
+                   hint:Text('Remind Me',style: TextStyle(
                      color: Theme.of(context).textTheme.subtitle1!.color!.withOpacity(0.3),fontSize: 12,
                    ),),
-                   borderColor:Colors.grey[300]! ,
-                   height:mediaQuery.height/10 ,
+                   borderColor: Colors.grey[300]!,
+                   validator:  (value){
+                     if (value==null) {
+                       return   "Reminder Can't be Empty";
+
+                     }
+                     else {
+                       reminder=value;
+                     }
+                   },
                    textColor: textColor,
-                   myDropDownItems: reminderList.map((e) {
+                   labelColor: Theme.of(context).backgroundColor,
+                   onChange: (value){},
+                   myDropDownItems:  reminderList.map((e) {
                      return DropdownMenuItem(
                          value: e,
                          child: Row(
@@ -316,22 +308,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                          )
                      );
                    }).toList(),
-                   validator: ( value){
-                     if (value==null) {
-                       return "Reminder Can't be Empty";
-                     }
-                     else {
-                       reminder=value;
-                     }
-                   },
-                   onChange: (value){
-
-                    // setState((){
-                    //   textColor=Colors.black;
-                    // });
-                   }),
+                   context: context),
                  SizedBox(
-                  height: mediaQuery.height/14.toDouble(),
+                  height: mediaQuery.height/14,
                 ),
                 MyElevatedButton(
                     radius: 6,
@@ -351,9 +330,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                            reminder:reminder!,
                            body: bodyController.text,
                        );
-                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BoardScreen()), (route) => false);
-                       await notifications.displayNotification( );
+                       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BoardScreen()), (route) => false);
+                       // await notifications.displayNotification( );
+                       await service.showNotifications( title: titleController.text, body: bodyController.text,
+                           id: AppCubit.get(context).taskId);
+                       await service.showScheduledNotifications(title: titleController.text, body: bodyController.text,
+                           seconds: 5,
+                           id: AppCubit.get(context).taskId,);
+                       await service.showNotificationsWithPayLoad(title: titleController.text, body: bodyController.text,
+                         payload: 'This is pay load',
+                         id: AppCubit.get(context).taskId,);
 
+                      showToast(text: 'Long press on Task To Details', state: ToastState.Warning);
+                      navigateAndFinish(context, const BoardScreen());
                       }
                     },
                     buttonName: 'Create task',
@@ -366,67 +355,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-   Widget myDropDownMenu<listName>({
-    required Text hint,
-     className,
-     listName,
-     myDropDownValue,
-     required myDropDownItems,
-     double height=60,
-     required validator,
-     required Function? onChange,
-     Color borderColor = Colors.limeAccent,
-     Color labelColor = Colors.white,
-    required Color textColor ,
-
-   }) {
-     return DropdownButtonFormField(
-          elevation: 6,
-         borderRadius:BorderRadius.circular(30) ,
-         onTap:(){} ,
-         validator: validator,
-         hint: hint,
-         decoration: InputDecoration(
-           hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1!.color!),
-           errorStyle:  const TextStyle(
-               fontSize: 12,
-               color: Colors.red),
-           labelStyle: TextStyle(color: labelColor, fontSize: 12
-           ),
-           errorBorder:OutlineInputBorder(
-               borderRadius: BorderRadius.circular(10),
-               borderSide: const BorderSide(
-                   width: 3,color: Colors.red
-               )
-           ),
-           focusedBorder: OutlineInputBorder(
-             borderRadius: BorderRadius.circular(10),
-             borderSide: BorderSide(width: 3,color: Theme.of(context).textTheme.subtitle1!.color!
-             ),
-           ),
-           enabledBorder: OutlineInputBorder(
-               borderRadius: BorderRadius.circular(10),
-               borderSide: BorderSide(
-                   width: 3,color: borderColor
-               )
-           ),
-         ),
-         dropdownColor: Theme.of(context).backgroundColor,
-         style:  TextStyle(
-           color: Theme.of(context).textTheme.subtitle1!.color!, fontSize: 14
-         ),
-         iconEnabledColor: Colors.grey[400],
-         isExpanded: false,
-         icon: const Icon(Icons.arrow_drop_down),
-         iconSize: 20,
-         menuMaxHeight:MediaQuery.of(context).size.height/5 ,
-         focusColor: Colors.limeAccent,
-         value: myDropDownValue,
-         onChanged: (value) {
-           onChange!(value);
-         },
-         items: myDropDownItems);
-   }
+  void listenToNotifications()=>service.onNotificationClick.listen(onNotificationsListener);
 
 
+  void onNotificationsListener(String? payload) {
+    if(payload !=null && payload.isNotEmpty){
+      debugPrint("payLoad   $payload");
+      navigateTo(context, widget:  ScheduleScreen());
+    }
+
+  }
 }

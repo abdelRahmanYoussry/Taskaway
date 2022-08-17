@@ -37,8 +37,7 @@ class MyTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp('$textInputFormat')),
-
+        // FilteringTextInputFormatter.allow(RegExp('$textInputFormat')),
       ],
       readOnly: readOnly,
       maxLines: 1,

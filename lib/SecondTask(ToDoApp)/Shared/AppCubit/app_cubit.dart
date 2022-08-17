@@ -13,6 +13,7 @@ class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
   static AppCubit get(context)=>BlocProvider.of(context);
   late Database database;
+  late int taskId;
   bool isChecked=false;
   List<Map> allTasks = [];
   List<Map> completeTasks = [];
@@ -68,6 +69,7 @@ class AppCubit extends Cubit<AppState> {
           'INSERT INTO Taskawy(title, date, time, status, startTime, reminder, body) VALUES( "$title", "$date", "$time", "all", "$startTime", "$reminder", "$body")')
           .then((value) {
         debugPrint("$value inserted successfully");
+        debugPrint("$value [id]");
         getDataFromDataBase(database);
 
         emit(InsertToDataBase());
@@ -87,6 +89,9 @@ class AppCubit extends Cubit<AppState> {
       value.forEach((element) {
         // debugPrint(element['status']);
         allTasks.add(element);
+        // debugPrint('${element['id']}   this is Id');
+        taskId=element['id'];
+        debugPrint('$taskId   this is taskId');
          if(element['status']=='complete') {
           completeTasks.add(element);
         }
@@ -143,11 +148,12 @@ class AppCubit extends Cubit<AppState> {
     required String startTime,
     required String endTime,
     required String reminder,
+    required String date,
     required int id})
   {
     database.rawUpdate(
-        'UPDATE Taskawy SET title = ?, body = ?, startTime = ?, time = ?, reminder = ?  WHERE id = ?',
-        [title,body,startTime,endTime,reminder, id]
+        'UPDATE Taskawy SET title = ?, body = ?, startTime = ?, time = ?, reminder = ? , date = ? WHERE id = ?',
+        [title,body,startTime,endTime,reminder,date, id]
     ).then((value) {
       debugPrint(value.toString());
       getDataFromDataBase(database);
