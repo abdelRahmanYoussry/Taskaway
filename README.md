@@ -1,4 +1,4 @@
-# algorizainternship
+# Taskaway
 
 To Do App(Sqflite & Cubit)
 
