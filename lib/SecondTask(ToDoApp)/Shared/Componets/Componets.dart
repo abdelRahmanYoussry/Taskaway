@@ -18,13 +18,13 @@ void showToast({
     timeInSecForIosWeb: 5,
     backgroundColor: chooseToastColor(state),
     textColor: Colors.white,
-    fontSize: 16.0
+    fontSize: 14.0
 );
 Color chooseToastColor(ToastState state){
   Color color;
   switch(state){
     case ToastState.Success:
-      color=Colors.green;
+      color=Colors.teal;
       break;
     case ToastState.Error:
       color=Colors.red;

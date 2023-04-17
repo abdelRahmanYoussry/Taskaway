@@ -6,6 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 ThemeData lightTheme=  ThemeData(
     scaffoldBackgroundColor:Colors.white ,
     primaryColor: Colors.white,
+    primarySwatch: Colors.green,
     backgroundColor: Colors.white,
     appBarTheme: const AppBarTheme(
       systemOverlayStyle:SystemUiOverlayStyle(
@@ -39,14 +40,15 @@ ThemeData lightTheme=  ThemeData(
 );
 
 ThemeData darkTheme=  ThemeData(
-     tabBarTheme:TabBarTheme(
+     tabBarTheme:const TabBarTheme(
        labelColor: Colors.white,
        unselectedLabelColor: Colors.red,
      ) ,
     scaffoldBackgroundColor: HexColor('333739'),
     backgroundColor:HexColor('333739') ,
     primaryColor:HexColor('333739') ,
-    appBarTheme: AppBarTheme(
+    primarySwatch: Colors.green,
+  appBarTheme: AppBarTheme(
         backwardsCompatibility: false,
         systemOverlayStyle:SystemUiOverlayStyle(
             statusBarColor: HexColor('333739'),

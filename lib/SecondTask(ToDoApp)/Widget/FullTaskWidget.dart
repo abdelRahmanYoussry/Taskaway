@@ -11,7 +11,7 @@ import 'Divider.dart';
 import 'TasksWidget.dart';
 
 class MyTaskFullWidget extends StatelessWidget {
-     Color taskColor=Colors.black;
+     Color taskColor=Colors.red;
      double height;
      double buttonHeight;
      List <Map>Taskslist;
@@ -19,6 +19,8 @@ class MyTaskFullWidget extends StatelessWidget {
      bool addTask;
      bool changeStatus;
      bool showBody;
+     bool isFavourite=false;
+
      MyTaskFullWidget ({Key? key,
      required this.height,
      required this.Taskslist,
@@ -37,15 +39,21 @@ class MyTaskFullWidget extends StatelessWidget {
           child: ConditionalBuilder(
             builder:(context)=> ListView.separated(
                 shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
                 itemBuilder:(context,index){
                   if(Taskslist[index]['status']=='complete'){
                     taskColor=Colors.green;
+                    isFavourite=false;
                   }
                   else if(Taskslist[index]['status']=='unComplete'||Taskslist[index]['status']=='all'){
                     taskColor=Colors.red;
+                    isFavourite=false;
+
                   }
                   else if  (Taskslist[index]['status']=='favourite'){
-                    taskColor=Colors.amber;
+                    taskColor=Colors.blue;
+                    // taskColor=taskColor;
+                    isFavourite=true;
                   }
                   return  Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20,horizontal:10),
@@ -53,6 +61,7 @@ class MyTaskFullWidget extends StatelessWidget {
                         model:Taskslist[index] ,
                         height: height,
                         showBody: showBody,
+                        isFavourite:isFavourite ,
                         changeStatus: changeStatus,
                         isChecked: Taskslist[index]['status']=='complete'?true:false,
                         popUpMenuColor: Theme.of(context).backgroundColor,
@@ -107,7 +116,9 @@ class MyTaskFullWidget extends StatelessWidget {
               borderColor: Colors.green,
               height: buttonHeight,
               width: double.infinity,
-              onTap: (){navigateTo(context, widget:  AddTaskScreen());},
+              onTap: (){
+
+                navigateTo(context, widget:  AddTaskScreen());},
               buttonName: 'Add task',
               buttonColor: Colors.green),
         )

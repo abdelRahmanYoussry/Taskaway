@@ -35,7 +35,7 @@ class BoardScreen extends StatelessWidget {
             toolbarHeight: mediaQuery.height/7,
             title: Row(
               children:  [
-                const Text('Taskaway'),
+                const Text('TaskAway',style: TextStyle(color: Colors.green)),
                 IconButton(onPressed: (){
                   AppCubit.get(context).changeDarkMode();
 
@@ -44,7 +44,16 @@ class BoardScreen extends StatelessWidget {
                 IconButton(onPressed: (){
                   AppCubit.get(context).getDateToScheduleTable(AppCubit.get(context).database, date: DateFormat.yMMMd().format(DateTime.now()));
                   navigateTo(context, widget:  ScheduleScreen());
-                }, icon: Icon(Icons.calendar_today_outlined,color: Theme.of(context).textTheme.subtitle1!.color,) )
+                },
+                    icon:
+                    Icon(Icons.calendar_today_outlined,
+                        color:
+                        Theme.of(context).textTheme.subtitle1!.color,
+
+                        // Colors.black
+
+
+                ) )
               ],
             ),
             bottom:  PreferredSize(
@@ -60,11 +69,13 @@ class BoardScreen extends StatelessWidget {
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
+                        color: Colors.blue
                       ),
                       indicatorColor: Theme.of(context).textTheme.subtitle1!.color,
                       physics:const BouncingScrollPhysics(),
                       unselectedLabelColor: Colors.grey,
-                      indicatorWeight: 2,
+                      indicatorWeight: 3,
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 5),
                       indicatorSize:TabBarIndicatorSize.label,
                       tabs: const [
                         Tab(text:'All' ),
