@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 class MyTextFormField extends StatelessWidget {
   late bool readOnly = false;
+  late bool enable = true;
   final TextEditingController control;
   final TextInputType type;
   late dynamic validator;
@@ -27,7 +28,7 @@ class MyTextFormField extends StatelessWidget {
     this.hint, required this.type,this.validator,this.onSubmit,this.onChanged,this.onTap
     ,required this.isPassword, this.label,  this.prefix,this.suffix,this.suffixClicked,required this.borderColor,
     required this.labelColor,required this.textColor,required this.backgroundColor,
-     this.prefixIconColor,this.textInputFormat,this.suffixIconColor
+     this.prefixIconColor,this.textInputFormat,this.suffixIconColor,required this.enable
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class MyTextFormField extends StatelessWidget {
       maxLines: 1,
       controller: control,
       keyboardType: type,
+      enabled: enable,
       validator: validator,
       onFieldSubmitted: (s) {
         onSubmit!(s);
@@ -69,17 +71,18 @@ class MyTextFormField extends StatelessWidget {
               )
             : null,
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: borderColor, width: 3),
+            borderSide: BorderSide(color: borderColor, width: 2),
             borderRadius: BorderRadius.circular(0)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: borderColor, width: 3),
+            borderSide: BorderSide(color: borderColor, width: 4),
             borderRadius: BorderRadius.circular(0)),
         focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 4),
             borderRadius: BorderRadius.circular(5)),
         errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 4),
+            borderSide: BorderSide(color: Colors.red, width: 2),
             borderRadius: BorderRadius.circular(5)),
+
       ),
     );
   }

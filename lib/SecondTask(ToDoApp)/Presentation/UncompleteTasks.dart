@@ -1,4 +1,3 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +23,7 @@ class UnCompleteTasksScreen extends StatelessWidget {
             height: mediaQuery.height/6,
             Taskslist: AppCubit.get(context).unCompleteTasks,
             buttonHeight: mediaQuery.height/16,
-            addTask: true,
+            addTask: false,
             showBody: false,
             changeStatus: true,
             isChecked: isChecked);

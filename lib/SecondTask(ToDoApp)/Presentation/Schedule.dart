@@ -1,5 +1,4 @@
 
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +66,9 @@ class ScheduleScreen extends StatelessWidget {
              ),
              onDateChange: (date){
                 weekScheduleTime=DateFormat('EEEE').format(date);
-               cubit.getDateToScheduleTable(AppCubit.get(context).database,date:DateFormat.yMMMd().format(date).toString());
+                scheduleTime=DateFormat().add_yMMMMd().format(date);
+               cubit.getDateToScheduleTable(AppCubit.get(context).database,date:DateFormat.yMMMd().format(date)
+                   .toString());
 
              },
            ),
@@ -85,7 +86,7 @@ class ScheduleScreen extends StatelessWidget {
                 ),),
                 const Spacer(),
                 Text(scheduleTime,style:  TextStyle(
-                  fontSize: 14,fontWeight: FontWeight.w500,color: Theme.of(context).textTheme.subtitle1!.color
+                  fontSize: 16,fontWeight: FontWeight.w500,color: Theme.of(context).textTheme.subtitle1!.color
                 ),)
               ],
             ),
